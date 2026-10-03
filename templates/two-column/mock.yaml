@@ -1,5 +1,6 @@
 # Mock content for previewing the two-column template:
 #   resume preview templates/two-column
+# resume.typ also falls back to this file when compiled directly with Typst.
 #
 # Right-column `sections` are dynamic: any number, in any order. A section has
 # either `text` (a paragraph) or `entries` (heading/subheading/dates/bullets).
