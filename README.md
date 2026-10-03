@@ -46,7 +46,6 @@ cp resume/master.example.yaml resume/master.yaml
 ```sh
 resume validate resume/master.yaml   # check the spec against the schema
 resume preview templates/two-column  # render a template with its mock data -> output/two-column.html
-pytest                               # run tests
 ```
 
 ## Templates
