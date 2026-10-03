@@ -1,0 +1,89 @@
+# Master resume spec — the superset of everything you could put on a resume.
+# Copy to resume/master.yaml and fill in your own experience.
+#
+# Every selectable item has a unique `id` (referenced by tailored outputs) and
+# `tags` (used to match against job descriptions). Write more bullets than will
+# ever fit; the tailoring step picks and orders them per job.
+
+basics:
+  name: Jane Doe
+  headline: Senior Software Engineer
+  email: jane@example.com
+  location: Toronto, ON
+  links:
+    - label: GitHub
+      url: https://github.com/janedoe
+    - label: LinkedIn
+      url: https://linkedin.com/in/janedoe
+
+summaries:
+  - id: summary-frontend
+    text: Frontend-leaning engineer with 8 years building fast, accessible web apps.
+    tags: [frontend, react, accessibility]
+  - id: summary-platform
+    text: Platform engineer focused on developer tooling, CI, and build performance.
+    tags: [platform, devex, ci]
+
+experience:
+  - id: acme
+    company: Acme Corp
+    title: Senior Software Engineer
+    start: 2021-03-01
+    location: Remote
+    tags: [frontend, platform]
+    bullets:
+      - id: acme-perf
+        text: Cut median page load by 40% by migrating to server components and streaming SSR.
+        tags: [frontend, react, performance]
+        priority: 9
+      - id: acme-ci
+        text: Rebuilt CI on remote caching, dropping p50 pipeline time from 22 to 6 minutes.
+        tags: [platform, ci, devex]
+        priority: 8
+      - id: acme-mentor
+        text: Mentored 4 engineers through promotion; ran the frontend guild.
+        tags: [leadership, mentoring]
+        priority: 5
+
+  - id: initech
+    company: Initech
+    title: Software Engineer
+    start: 2017-06-01
+    end: 2021-02-28
+    tags: [backend, frontend]
+    bullets:
+      - id: initech-api
+        text: Designed a GraphQL gateway serving 30 internal services and 2k req/s.
+        tags: [backend, graphql, api-design]
+        priority: 7
+      - id: initech-a11y
+        text: Led WCAG 2.1 AA remediation across the customer dashboard.
+        tags: [frontend, accessibility]
+        priority: 6
+
+projects:
+  - id: proj-cli
+    name: tinybuild
+    url: https://github.com/janedoe/tinybuild
+    tags: [devex, open-source]
+    bullets:
+      - id: proj-cli-stars
+        text: Zero-config bundler for small libraries; 1.2k GitHub stars.
+        tags: [open-source, tooling]
+
+skills:
+  - id: skills-languages
+    name: Languages
+    items: [TypeScript, Python, Go, SQL]
+  - id: skills-frontend
+    name: Frontend
+    items: [React, Next.js, CSS, Web Performance, Accessibility]
+  - id: skills-platform
+    name: Platform
+    items: [GitHub Actions, Bazel, Docker, Kubernetes]
+
+education:
+  - id: edu-uoft
+    institution: University of Toronto
+    degree: B.A.Sc. Computer Engineering
+    end: 2017-05-01
