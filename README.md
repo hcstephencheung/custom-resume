@@ -27,8 +27,9 @@ jobs/<job>.md       ─┘
 | --- | --- |
 | `resume/master.example.yaml` | Example master spec; copy to `resume/master.yaml` |
 | `jobs/` | Job descriptions, one file per posting |
-| `templates/` | Output templates (Jinja2) |
+| `templates/<name>/` | Output templates: `resume.html.j2` plus `mock.yaml` sample content |
 | `src/custom_resume/schema.py` | Pydantic schema for the master spec |
+| `src/custom_resume/render.py` | Renders a template to HTML |
 | `src/custom_resume/cli.py` | `resume` CLI entry point |
 | `output/` | Generated resumes (gitignored) |
 
@@ -44,12 +45,22 @@ cp resume/master.example.yaml resume/master.yaml
 
 ```sh
 resume validate resume/master.yaml   # check the spec against the schema
+resume preview templates/two-column  # render a template with its mock data -> output/two-column.html
 pytest                               # run tests
 ```
+
+## Templates
+
+- **two-column**: dark 25% sidebar (contact, keyword groups, education) and a
+  main column with any number of sections. Built to stay ATS-parseable when
+  printed to PDF: name first in reading order, plain-text contact labels, no
+  icons, skill bars or images, no positioned or translucent text, letter-spacing
+  kept tight and ligatures off.
 
 ## Roadmap
 
 - [x] Master spec schema + validation
 - [ ] `resume tailor jobs/<job>.md`: select and order items per job description
-- [ ] `resume render`: Markdown/HTML output from templates
+- [x] Two-column HTML template + `resume preview`
+- [ ] `resume render`: fill a template from a tailored selection
 - [ ] PDF export
