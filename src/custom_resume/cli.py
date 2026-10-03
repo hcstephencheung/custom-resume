@@ -4,6 +4,7 @@ from typing import Annotated
 import typer
 from pydantic import ValidationError
 
+from custom_resume.render import load_mock, render_template
 from custom_resume.schema import load_master
 
 app = typer.Typer(help="Spec-driven resume builder.", no_args_is_help=True)
@@ -29,3 +30,17 @@ def validate(
         f"{spec}: ok ({len(master.experience)} roles, {n_bullets} bullets)",
         fg=typer.colors.GREEN,
     )
+
+
+@app.command()
+def preview(
+    template: Annotated[Path, typer.Argument(exists=True, file_okay=False)] = Path(
+        "templates/two-column"
+    ),
+    out: Annotated[Path | None, typer.Option(help="Output HTML path.")] = None,
+) -> None:
+    """Render a template with its bundled mock data."""
+    out = out or Path("output") / f"{template.name}.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(render_template(template, load_mock(template)))
+    typer.secho(f"wrote {out}", fg=typer.colors.GREEN)
