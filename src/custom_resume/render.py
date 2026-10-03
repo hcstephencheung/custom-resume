@@ -1,26 +1,30 @@
-"""Render resume templates to HTML.
+"""Render resume templates to PDF with Typst.
 
-A template is a directory under `templates/` containing `resume.html.j2` and,
-optionally, `mock.yaml` with sample content for previewing it.
+A template is a directory under `templates/` containing `resume.typ` and,
+optionally, `mock.yaml` with sample content for previewing it. The template
+receives its data as a JSON string in `sys.inputs.data`.
 """
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
+import typst
 import yaml
-from jinja2 import Environment, FileSystemLoader
+
+# Fonts are vendored so output is identical on every machine.
+FONTS_DIR = Path(__file__).resolve().parents[2] / "fonts"
 
 
-def render_template(template_dir: Path, context: dict[str, Any]) -> str:
-    env = Environment(
-        loader=FileSystemLoader(template_dir),
-        autoescape=True,
-        trim_blocks=True,
-        lstrip_blocks=True,
+def render_pdf(template_dir: Path, context: dict[str, Any]) -> bytes:
+    return typst.compile(
+        str(template_dir / "resume.typ"),
+        font_paths=[str(FONTS_DIR)],
+        ignore_system_fonts=True,
+        sys_inputs={"data": json.dumps(context, default=str)},
     )
-    return env.get_template("resume.html.j2").render(**context)
 
 
 def load_mock(template_dir: Path) -> dict[str, Any]:
