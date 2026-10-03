@@ -25,6 +25,8 @@ resume preview templates/two-column  # render a template with its mock data
 
 ## Templates
 
-Templates must stay ATS-parseable when printed to PDF (see the Templates section
-of README.md). After changing one, print it to PDF, extract the text, and check
-the reading order and that headings don't come out letter-spaced.
+Templates are Typst files (`templates/<name>/resume.typ`) compiled to PDF by
+`render.py`. They must stay ATS-parseable (see the Templates section of
+README.md). After changing one, run `resume preview`, extract the PDF text
+(e.g. with pypdf), and check the reading order (name, then sidebar, then main)
+and that headings don't come out letter-spaced.
