@@ -1,0 +1,96 @@
+# Mock content for previewing the two-column template:
+#   resume preview templates/two-column
+#
+# Right-column `sections` are dynamic: any number, in any order. A section has
+# either `text` (a paragraph) or `entries` (heading/subheading/dates/bullets).
+# Left-column `sidebar` sections use `groups` (keyword lists), `entries`, or `items`.
+
+name: Jane Doe
+headline: Senior Software Engineer
+
+contact:
+  - label: Email
+    value: jane.doe@example.com
+    href: mailto:jane.doe@example.com
+  - label: Phone
+    value: +1 416-555-0142
+  - label: Location
+    value: Toronto, ON
+  - label: LinkedIn
+    value: linkedin.com/in/janedoe
+    href: https://linkedin.com/in/janedoe
+  - label: GitHub
+    value: github.com/janedoe
+    href: https://github.com/janedoe
+
+sidebar:
+  - title: Skills
+    groups:
+      - name: Languages
+        items: [TypeScript, JavaScript, Python, Go, SQL]
+      - name: Frontend
+        items: [React, Next.js, Server Components, CSS, Web Performance, Accessibility (WCAG 2.1)]
+      - name: Backend
+        items: [Node.js, GraphQL, REST APIs, PostgreSQL, Redis]
+      - name: Platform
+        items: [GitHub Actions, Bazel, Docker, Kubernetes, AWS]
+      - name: Practices
+        items: [System Design, Code Review, Mentoring, Technical Writing]
+  - title: Education
+    entries:
+      - heading: University of Toronto
+        subheading: B.A.Sc. Computer Engineering
+        dates: 2013 – 2017
+  - title: Certifications
+    items:
+      - AWS Certified Developer – Associate
+      - Certified Kubernetes Application Developer
+
+sections:
+  - title: Profile
+    text: >-
+      Senior software engineer with 8 years of experience building fast,
+      accessible web applications and the developer tooling behind them. Known
+      for turning slow, fragile systems into fast, reliable ones, and for
+      growing the engineers around me. Comfortable across the stack, happiest
+      where product performance and developer experience meet.
+
+  - title: Work Experience
+    timeline: true
+    entries:
+      - heading: Acme Corp
+        subheading: Senior Software Engineer
+        location: Remote
+        dates: 2021 – Present
+        bullets:
+          - Cut median page load by 40% by migrating the storefront to server components and streaming SSR.
+          - Rebuilt CI on remote caching, dropping p50 pipeline time from 22 to 6 minutes for 120 engineers.
+          - Led design of a shared component library adopted by 9 product teams.
+          - Mentored 4 engineers through promotion and ran the frontend guild.
+      - heading: Initech
+        subheading: Software Engineer
+        location: Toronto, ON
+        dates: 2017 – 2021
+        bullets:
+          - Designed a GraphQL gateway federating 30 internal services at 2k requests per second.
+          - Led WCAG 2.1 AA remediation across the customer dashboard, resolving 300+ issues.
+          - Introduced contract testing between frontend and backend teams, cutting integration bugs by half.
+      - heading: Globex
+        subheading: Software Engineering Intern
+        location: Toronto, ON
+        dates: 2016
+        bullets:
+          - Built an internal analytics dashboard in React used daily by the sales team.
+
+  - title: Projects
+    entries:
+      - heading: tinybuild
+        subheading: Open-source zero-config bundler
+        dates: 2022 – Present
+        bullets:
+          - Zero-config bundler for small TypeScript libraries; 1.2k GitHub stars and 40 contributors.
+      - heading: a11y-lint
+        subheading: Accessibility linter for JSX
+        dates: 2020
+        bullets:
+          - ESLint plugin catching common accessibility mistakes at build time; 15k weekly npm downloads.
