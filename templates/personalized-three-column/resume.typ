@@ -4,6 +4,7 @@
 //          then contact and education
 //   right: the experience timeline, drawn in gold, then skills, then
 //          interests in smaller type
+// and, if set, a one-line disclaimer in the bottom margin.
 //
 // Data arrives as a JSON string in `sys.inputs.data` (see render.py). Compiled
 // on its own it falls back to mock.yaml, so the layout can be iterated on with:
@@ -37,6 +38,13 @@
 
 #set document(title: data.name + " – Resume", author: data.name)
 #set page(paper: "us-letter", margin: (x: 0.5in, top: 0.5in, bottom: 0.45in), fill: cream)
+// The disclaimer sits in the bottom margin as a footer, so it never takes room
+// from the columns or pushes the resume onto a second page.
+#set page(footer: if get(data, "disclaimer") != none {
+  text(size: 7pt, weight: "bold", tracking: 0.06em, fill: blue, "DISCLAIMER")
+  h(6pt)
+  text(size: 7.5pt, fill: muted, txt(data.disclaimer))
+})
 #set text(
   font: font,
   size: 8.75pt,
@@ -200,3 +208,4 @@
   // Experience title.
   left-column, right-column,
 )
+
