@@ -1,10 +1,13 @@
 // Single-page resume on one cream background:
-//   top:    name, headline and a personalized summary, full width; any company
-//           from the experience list named in the summary is set in bold blue
+//   top:    name, headline and summary, full width
 //   left:   skills and education
 //   middle: the experience timeline, drawn in gold, a bullet or so per role
 //   right:  contact, then interests in smaller type
-// and, if set, a one-line disclaimer in the bottom margin.
+//   fit:    a full-width, blue-bordered "Why I'm a fit" panel under the
+//           columns with the personalized points
+// and, if set, a one-line disclaimer in the bottom margin. Any company from the
+// experience list mentioned in the summary or the fit points is set in bold
+// blue.
 //
 // Data arrives as a JSON string in `sys.inputs.data` (see render.py). Compiled
 // on its own it falls back to mock.yaml, so the layout can be iterated on with:
@@ -14,7 +17,8 @@
 // "S P A C E D" text), ligatures off ("ﬁ" glyphs break keyword matching),
 // hyphenation off ("Type-Script" breaks it too) and kerning off (Space
 // Grotesk tightens "tt" enough that some parsers read "cut ting"). Text order
-// follows source order: top section, then the left, middle and right columns.
+// follows source order: top section, the left, middle and right columns,
+// then the fit panel.
 
 #let data = if "data" in sys.inputs {
   json(bytes(sys.inputs.data))
@@ -113,7 +117,6 @@
   }
   if get(data, "summary") != none {
     v(6pt)
-    // The summary is the personalized pitch for this application.
     par(justify: true, text(size: 9.5pt, emphasize(txt(data.summary), companies)))
   }
 }
@@ -192,6 +195,20 @@
   }
 }
 
+// ---------- "Why I'm a fit" row ----------
+
+// A full-width, blue-bordered panel under the columns holding the points
+// written for this application, with any company it mentions highlighted.
+#let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
+  section-title("Why I'm a fit")
+  let note = data.personalized
+  if type(note) == array {
+    list(..note.map(p => emphasize(txt(p), companies)))
+  } else {
+    emphasize(txt(note), companies)
+  }
+})
+
 // ---------- Page ----------
 
 #top
@@ -201,3 +218,7 @@
   column-gutter: 0.2in,
   left-column, middle-column, right-column,
 )
+#if get(data, "personalized") != none {
+  v(14pt)
+  fit-panel
+}

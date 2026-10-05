@@ -112,6 +112,9 @@ class MasterResume(_Model):
     skills: list[SkillGroup] = Field(default_factory=list)
     education: list[Education] = Field(default_factory=list)
     interests: str | None = None
+    # Written for a specific application, e.g. why this company or role: a
+    # paragraph, or a list of points rendered as bullets.
+    personalized: str | list[str] | None = None
     # A short note shown at the very end of the resume, e.g. how it was made.
     disclaimer: str | None = None
 

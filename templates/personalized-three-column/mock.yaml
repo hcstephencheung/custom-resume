@@ -2,11 +2,14 @@
 #   resume preview templates/personalized-three-column
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
-# Top section: name, headline, subheadline, and `summary`, written for the
-# application; any company from `experience` it mentions is highlighted.
+# Top section: name, headline, subheadline and `summary`.
 # Left column: `skills` and `education`.
 # Middle column: `experience` as a timeline, a bullet or so per role.
 # Right column: `contact` and `interests`.
+# Full-width row under the columns: `personalized` (shown as "Why I'm a fit"),
+# a paragraph or a list of points.
+# Any company from `experience` mentioned in the summary or the points is
+# highlighted.
 # Bottom margin: `disclaimer`, one line.
 
 name: Jane Doe
@@ -15,9 +18,9 @@ subheadline: Full-Stack (TypeScript · React · Node.js)
 
 summary: >-
   Senior software engineer with 8 years of experience building fast, accessible
-  web applications and the developer tooling behind them. At Acme Corp I cut
-  storefront page load by 40% and rebuilt CI for 120 engineers; at Initech I
-  designed the GraphQL gateway behind 30 internal services.
+  web applications and the developer tooling behind them. Known for turning
+  slow, fragile systems into fast, reliable ones, and for growing the engineers
+  around me.
 
 contact:
   - label: Email
@@ -48,6 +51,10 @@ education:
   - heading: University of Toronto
     subheading: B.A.Sc. Computer Engineering
     dates: 2013 – 2017
+
+personalized:
+  - Cut storefront page load at Acme Corp by 40% by migrating to server components
+  - Designed Initech's GraphQL gateway, federating 30 internal services at 2k requests per second
 
 interests: >-
   Trail running, film photography, and contributing to open-source developer
