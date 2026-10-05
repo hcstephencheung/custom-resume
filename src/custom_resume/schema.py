@@ -52,14 +52,6 @@ class Basics(_Model):
     links: list[Link] = Field(default_factory=list)
 
 
-class FitPoint(_Model):
-    """A "why I'm a fit" point tied to a role. `text` mentions `company` in its
-    own words; templates highlight the company wherever it appears."""
-
-    company: str
-    text: str
-
-
 class Summary(_Model):
     """One of several summary variants; the tailoring step picks the best fit."""
 
@@ -120,10 +112,6 @@ class MasterResume(_Model):
     skills: list[SkillGroup] = Field(default_factory=list)
     education: list[Education] = Field(default_factory=list)
     interests: str | None = None
-    # Written for a specific application, e.g. why this company or role: a
-    # paragraph, or a list of points rendered as bullets. A point is plain text,
-    # or a company and text that mentions it (the company is highlighted).
-    personalized: str | list[str | FitPoint] | None = None
     # A short note shown at the very end of the resume, e.g. how it was made.
     disclaimer: str | None = None
 
