@@ -44,6 +44,8 @@ class Link(_Model):
 class Basics(_Model):
     name: str
     headline: str | None = None
+    # Secondary line under the headline, e.g. a specialism or core stack.
+    subheadline: str | None = None
     email: str | None = None
     phone: str | None = None
     location: str | None = None

@@ -1,7 +1,7 @@
 """Turn a master resume spec into the data a template renders.
 
 Templates take a flat, presentation-shaped dict (see templates/*/mock.yaml):
-name, headline, contact, sidebar sections and main sections. This maps every
+name, headline, subheadline, contact, sidebar sections and main sections. This maps every
 item in a master spec into that shape. Choosing which items to include for a
 particular job is the tailoring step's job, not this module's.
 """
@@ -75,6 +75,8 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
             for e in master.education
         ]
         sidebar.append({"title": "Education", "entries": entries})
+    if master.interests:
+        sidebar.append({"title": "Interests", "text": master.interests})
 
     sections: list[dict[str, Any]] = []
     if master.summaries:
@@ -97,12 +99,11 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
             for p in master.projects
         ]
         sections.append({"title": "Projects", "entries": entries})
-    if master.interests:
-        sections.append({"title": "Interests", "text": master.interests})
 
     return {
         "name": basics.name,
         "headline": basics.headline,
+        "subheadline": basics.subheadline,
         "contact": contact,
         "sidebar": sidebar,
         "sections": sections,
