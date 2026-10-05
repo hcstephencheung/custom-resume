@@ -15,7 +15,10 @@
 }
 
 #let cream = rgb("#fcffe7")  // page background, text on blue
-#let blue = rgb("#3657d9")   // sidebar, name, section titles, accents
+#let blue = rgb("#3657d9")   // sidebar, name, section titles
+// Exact complement of the blue (hue 48°). Shapes only: as text it is
+// 1.6:1 on cream and 3.8:1 on blue, too faint to read.
+#let gold = rgb("#f5c919")   // headline bar, timeline dots
 #let ink = rgb("#262626")    // body text
 #let muted = rgb("#5c5f52")  // secondary text on cream
 #let rule = rgb("#b4c0ef")   // timeline line
@@ -103,14 +106,14 @@
     v(-6pt)
     text(size: 12pt, tracking: 0.08em, upper(data.headline))
     v(2pt)
-    line(length: 0.55in, stroke: 3pt + blue)
+    line(length: 0.55in, stroke: 3pt + gold)
   }
   v(18pt)
 }
 
 #let entry(e, timeline: false) = block(breakable: false, width: 100%, {
   if timeline {
-    place(dx: -14pt, dy: 2pt, circle(radius: 3pt, fill: blue))
+    place(dx: -14pt, dy: 2pt, circle(radius: 3pt, fill: gold))
   }
   grid(
     columns: (1fr, auto),
