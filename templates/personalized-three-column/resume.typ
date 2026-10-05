@@ -1,10 +1,9 @@
 // Single-page resume on one cream background:
-//   top:   name, headline and summary, full width
-//   fit:   a full-width, gold-bordered "Why I'm a fit" panel with the
-//          personalized points, company names highlighted in blue
-//   left:  contact and education
-//   right: the experience timeline (roles only, no bullets), drawn in gold,
-//          then skills, then interests in smaller type
+//   top:    name, headline and a personalized summary, full width; any company
+//           from the experience list named in the summary is set in bold blue
+//   left:   skills and education
+//   middle: the experience timeline, drawn in gold, a bullet or so per role
+//   right:  contact, then interests in smaller type
 // and, if set, a one-line disclaimer in the bottom margin.
 //
 // Data arrives as a JSON string in `sys.inputs.data` (see render.py). Compiled
@@ -15,8 +14,7 @@
 // "S P A C E D" text), ligatures off ("ﬁ" glyphs break keyword matching),
 // hyphenation off ("Type-Script" breaks it too) and kerning off (Space
 // Grotesk tightens "tt" enough that some parsers read "cut ting"). Text order
-// follows source order: top section, the fit panel, then the left and right
-// columns.
+// follows source order: top section, then the left, middle and right columns.
 
 #let data = if "data" in sys.inputs {
   json(bytes(sys.inputs.data))
@@ -25,10 +23,10 @@
 }
 
 #let cream = rgb("#fcffe7")  // page background
-#let blue = rgb("#3657d9")   // name, section titles, company names in "Why I'm a fit"
+#let blue = rgb("#3657d9")   // name, section titles, company names in the summary
 // Exact complement of the blue (hue 48°). Shapes only: as text it is 1.6:1
 // on cream, too faint to read.
-#let gold = rgb("#f5c919")   // headline bar, timeline, "Why I'm a fit" border
+#let gold = rgb("#f5c919")   // headline bar, experience timeline
 #let ink = rgb("#262626")    // body text
 #let muted = rgb("#5c5f52")  // secondary text, labels
 
@@ -62,10 +60,10 @@
 
 // ---------- Shared pieces ----------
 
-#let section-title(title, rule: blue, size: 10pt) = block(sticky: true, below: 6pt, {
-  heading(level: 2, text(size: size, weight: "bold", tracking: 0.06em, fill: blue, upper(title)))
+#let section-title(title) = block(sticky: true, below: 6pt, {
+  heading(level: 2, text(size: 10pt, weight: "bold", tracking: 0.06em, fill: blue, upper(title)))
   v(3pt)
-  line(length: 100%, stroke: 0.75pt + rule)
+  line(length: 100%, stroke: 0.75pt + blue)
 })
 
 #let label(body) = text(size: 7pt, tracking: 0.06em, fill: muted, upper(body))
@@ -77,6 +75,23 @@
   let scale = calc.max(0.8, size.width / measure(body).width)
   if scale >= 1 { body } else { text(size: 1em * scale, body) }
 })
+
+// Sets every mention of the given names in bold blue. The text itself is
+// unchanged, so extracted text reads as a plain sentence.
+#let emphasize(s, names) = {
+  let parts = (s,)
+  // Longest first, so a name that contains another is matched whole.
+  for name in names.sorted(key: n => -n.len()) {
+    parts = parts
+      .map(p => if type(p) == str {
+        p.split(name).intersperse(text(weight: "bold", fill: blue, name))
+      } else { (p,) })
+      .flatten()
+  }
+  parts.join()
+}
+
+#let companies = data.experience.map(e => txt(e.heading)).dedup()
 
 // ---------- Top section ----------
 
@@ -98,41 +113,24 @@
   }
   if get(data, "summary") != none {
     v(6pt)
-    par(justify: true, text(size: 9.5pt, data.summary))
+    // The summary is the personalized pitch for this application.
+    par(justify: true, text(size: 9.5pt, emphasize(txt(data.summary), companies)))
   }
 }
-
-// ---------- "Why I'm a fit" row ----------
-
-// A full-width, gold-bordered panel holding the points written for this
-// application. Its title and text are set 20% larger than the columns below
-// so the note leads the page.
-#let fit-panel = block(width: 100%, stroke: 1pt + gold, radius: 6pt, inset: 10pt, {
-  section-title("Why I'm a fit", size: 12pt)
-  // A point can name the company it comes from; the sentence mentions the
-  // company in its own words, and each mention is set in bold blue. The text
-  // itself stays plain, so extracted text reads naturally.
-  let point(p) = if type(p) == dictionary {
-    let company = text(weight: "bold", fill: blue, txt(p.company))
-    txt(p.text).split(txt(p.company)).join(company)
-  } else {
-    txt(p)
-  }
-  text(size: 10.5pt, {
-    let note = data.personalized
-    if type(note) == array { list(..note.map(point)) } else { txt(note) }
-  })
-})
 
 // ---------- Left column ----------
 
 #let left-column = {
-  section-title("Contact")
-  for c in data.contact {
-    label(c.label)
-    linebreak()
-    fit(if get(c, "href") != none { link(c.href, txt(c.value)) } else { txt(c.value) })
-    v(5pt)
+  if get(data, "skills") != none and data.skills.len() > 0 {
+    section-title("Skills")
+    for g in data.skills {
+      label(g.name)
+      linebreak()
+      // Each item stays on one line ("CSS/SCSS", not "CSS/" + "SCSS"), so
+      // lines only break between items.
+      g.items.map(i => box(txt(i))).join(", ")
+      v(6pt)
+    }
   }
 
   if get(data, "education") != none and data.education.len() > 0 {
@@ -146,7 +144,7 @@
   }
 }
 
-// ---------- Right column ----------
+// ---------- Middle column ----------
 
 #let entry(e) = block(breakable: false, width: 100%, {
   place(dx: -12.5pt, dy: 2pt, circle(radius: 3pt, fill: gold))
@@ -163,37 +161,32 @@
       if get(e, "location") != none [ · #e.location]
     })
   }
-  // No bullets: achievements live in the "Why I'm a fit" panel, each tied to
-  // its company, so the timeline stays a compact list of roles.
+  if get(e, "bullets") != none and e.bullets.len() > 0 {
+    v(1pt)
+    list(..e.bullets.map(txt))
+  }
 })
 
-#let right-column = {
+#let middle-column = {
   section-title("Experience")
-  let entries = data.experience.map(entry).join(v(7pt))
+  let entries = data.experience.map(entry).join(v(8pt))
   // The whole timeline is gold: the line as well as the dots.
   pad(left: 3pt, block(inset: (left: 9.5pt), stroke: (left: 1.5pt + gold), entries))
+}
 
-  // Skills as label / items rows: the wide right column fits each group on a
-  // line or two.
-  if get(data, "skills") != none and data.skills.len() > 0 {
-    v(12pt)
-    section-title("Skills")
-    grid(
-      // The name column sizes to the longest name, so names never wrap.
-      columns: (auto, 1fr),
-      column-gutter: 8pt,
-      row-gutter: 4pt,
-      ..data.skills.map(g => (
-        pad(top: 1.5pt, label(g.name)),
-        // Each item stays on one line ("CSS/SCSS", not "CSS/" + "SCSS"), so
-        // lines only break between items.
-        g.items.map(i => box(txt(i))).join(", "),
-      )).flatten(),
-    )
+// ---------- Right column ----------
+
+#let right-column = {
+  section-title("Contact")
+  for c in data.contact {
+    label(c.label)
+    linebreak()
+    fit(if get(c, "href") != none { link(c.href, txt(c.value)) } else { txt(c.value) })
+    v(5pt)
   }
 
   if get(data, "interests") != none {
-    v(12pt)
+    v(10pt)
     section-title("Interests")
     text(size: 7.75pt, txt(data.interests))
   }
@@ -203,13 +196,8 @@
 
 #top
 #v(14pt)
-#if get(data, "personalized") != none {
-  fit-panel
-  v(14pt)
-}
 #grid(
-  columns: (2.3in, 1fr),
-  column-gutter: 0.25in,
-  left-column, right-column,
+  columns: (1.9in, 1fr, 1.8in),
+  column-gutter: 0.2in,
+  left-column, middle-column, right-column,
 )
-

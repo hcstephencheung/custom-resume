@@ -2,13 +2,11 @@
 #   resume preview templates/personalized-three-column
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
-# Top section: name, headline, subheadline, summary.
-# Full-width row: `personalized` (shown as "Why I'm a fit"): a paragraph, or a
-# list of points, each plain text or `company` + `text`, where the text mentions
-# the company and each mention is highlighted.
-# Left column: `contact` and `education`.
-# Right column: `experience` as a timeline of roles (bullets aren't shown), then
-# `skills` and `interests`.
+# Top section: name, headline, subheadline, and `summary`, written for the
+# application; any company from `experience` it mentions is highlighted.
+# Left column: `skills` and `education`.
+# Middle column: `experience` as a timeline, a bullet or so per role.
+# Right column: `contact` and `interests`.
 # Bottom margin: `disclaimer`, one line.
 
 name: Jane Doe
@@ -17,9 +15,9 @@ subheadline: Full-Stack (TypeScript · React · Node.js)
 
 summary: >-
   Senior software engineer with 8 years of experience building fast, accessible
-  web applications and the developer tooling behind them. Known for turning
-  slow, fragile systems into fast, reliable ones, and for growing the engineers
-  around me.
+  web applications and the developer tooling behind them. At Acme Corp I cut
+  storefront page load by 40% and rebuilt CI for 120 engineers; at Initech I
+  designed the GraphQL gateway behind 30 internal services.
 
 contact:
   - label: Email
@@ -51,14 +49,6 @@ education:
     subheading: B.A.Sc. Computer Engineering
     dates: 2013 – 2017
 
-personalized:
-  - company: Acme Corp
-    text: Cut median page load on Acme Corp's storefront by 40% by migrating to server components
-  - company: Acme Corp
-    text: Rebuilt CI on remote caching at Acme Corp, dropping p50 pipeline time from 22 to 6 minutes
-  - company: Initech
-    text: Designed Initech's GraphQL gateway, federating 30 internal services at 2k requests per second
-
 interests: >-
   Trail running, film photography, and contributing to open-source developer
   tools on weekends.
@@ -68,14 +58,20 @@ experience:
     subheading: Senior Software Engineer
     location: Remote
     dates: 2021 – Present
+    bullets:
+      - Cut median page load by 40% by migrating the storefront to server components and streaming SSR.
   - heading: Initech
     subheading: Software Engineer
     location: Toronto, ON
     dates: 2017 – 2021
+    bullets:
+      - Designed a GraphQL gateway federating 30 internal services at 2k requests per second.
   - heading: Globex
     subheading: Software Engineering Intern
     location: Toronto, ON
     dates: 2016
+    bullets:
+      - Built an internal analytics dashboard in React used daily by the sales team.
 
 disclaimer: >-
   This resume was rendered from a YAML spec with Typst; the content is the
