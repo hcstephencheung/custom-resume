@@ -90,7 +90,8 @@
     sidebar-section(s.title, {
       if get(s, "groups") != none {
         for g in s.groups {
-          text(size: 8pt, weight: "bold", tracking: 0.06em, upper(g.name))
+          // Same label style as the contact fields above.
+          sidebar-label(g.name)
           linebreak()
           g.items.map(txt).join(", ")
           v(7pt)
