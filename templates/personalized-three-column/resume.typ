@@ -1,9 +1,9 @@
 // Single-page resume on one cream background. A full-width top section holds
 // the name, headline and summary; below it, two columns:
-//   left:  a blue-bordered "Why I'm a fit" panel with the personalized note,
-//          then contact and education
-//   right: the experience timeline, drawn in gold, then skills, then
-//          interests in smaller type
+//   left:  a blue-bordered "Why I'm a fit" panel (40% of the page) with the
+//          personalized points, then contact and education
+//   right: the experience timeline (roles only, no bullets), drawn in gold,
+//          then skills, then interests in smaller type
 // and, if set, a one-line disclaimer in the bottom margin.
 //
 // Data arrives as a JSON string in `sys.inputs.data` (see render.py). Compiled
@@ -24,9 +24,9 @@
 
 #let cream = rgb("#fcffe7")  // page background
 #let blue = rgb("#3657d9")   // name, section titles, "Why I'm a fit" border
-// Exact complement of the blue (hue 48°). Shapes only: as text it is 1.6:1
-// on cream, too faint to read.
-#let gold = rgb("#f5c919")   // headline bar, experience timeline
+// Exact complement of the blue (hue 48°). Mostly for shapes: as text it is
+// only 1.6:1 on cream, so it's used for short bold company names only.
+#let gold = rgb("#f5c919")   // headline bar, timeline, company names in "Why I'm a fit"
 #let ink = rgb("#262626")    // body text
 #let muted = rgb("#5c5f52")  // secondary text, labels
 
@@ -108,10 +108,17 @@
 #let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
   section-title("Why I'm a fit", size: 12pt)
   // Left-aligned: justifying a column this narrow opens wide gaps between words.
-  // A paragraph, or a list of short points shown as bullets.
+  // A paragraph, or a list of points shown as bullets. A point can name the
+  // role it comes from, shown as "At <company>, <text>" with the company in
+  // bold gold.
+  let point(p) = if type(p) == dictionary {
+    [At #text(weight: "bold", fill: gold, txt(p.company)), #txt(p.text)]
+  } else {
+    txt(p)
+  }
   text(size: 10.5pt, {
     let note = data.personalized
-    if type(note) == array { list(..note.map(txt)) } else { txt(note) }
+    if type(note) == array { list(..note.map(point)) } else { txt(note) }
   })
 })
 
@@ -159,10 +166,8 @@
       if get(e, "location") != none [ · #e.location]
     })
   }
-  if get(e, "bullets") != none and e.bullets.len() > 0 {
-    v(1pt)
-    list(..e.bullets.map(txt))
-  }
+  // No bullets: achievements live in the "Why I'm a fit" panel, each tied to
+  // its company, so the timeline stays a compact list of roles.
 })
 
 #let right-column = {
@@ -202,7 +207,8 @@
 #top
 #v(14pt)
 #grid(
-  columns: (2.6in, 1fr),
+  // 40% of the page width for the "Why I'm a fit" column.
+  columns: (3.4in, 1fr),
   column-gutter: 0.25in,
   // Both columns start flush, so the panel's top border lines up with the
   // Experience title.
