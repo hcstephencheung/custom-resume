@@ -3,8 +3,8 @@
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
 # Top section: name, headline, subheadline, summary.
-# Left column: `personalized` (shown as "Why I'm a fit"), then `contact` and
-# `education`.
+# Left column: `personalized` (shown as "Why I'm a fit"; a paragraph or a list
+# of bullets), then `contact` and `education`.
 # Right column: `experience` as a timeline, then `skills` and `interests`. Keep
 # experience to a bullet or two per role so the resume fits on one page.
 
