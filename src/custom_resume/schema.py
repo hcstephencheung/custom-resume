@@ -10,9 +10,26 @@ from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
+from typing import Annotated
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
+from pydantic import (
+    BaseModel,
+    BeforeValidator,
+    ConfigDict,
+    Field,
+    HttpUrl,
+    StringConstraints,
+    model_validator,
+)
+
+# "2012", "2025-04" or "2025-04-01": resumes usually give a month or just a year,
+# and padding those out to full dates would invent precision.
+PartialDate = Annotated[
+    str,
+    BeforeValidator(lambda v: v.isoformat() if isinstance(v, date) else str(v)),
+    StringConstraints(pattern=r"^\d{4}(-\d{2}(-\d{2})?)?$"),
+]
 
 
 class _Model(BaseModel):
@@ -53,11 +70,13 @@ class Experience(_Model):
     id: str
     company: str
     title: str
-    start: date
-    end: date | None = None  # None = present
+    start: PartialDate
+    end: PartialDate | None = None  # None = present
     location: str | None = None
     tags: list[str] = Field(default_factory=list)
     bullets: list[Bullet]
+    # Technologies used in the role, shown as a "Stack:" line.
+    stack: list[str] = Field(default_factory=list)
 
 
 class Project(_Model):
@@ -78,8 +97,8 @@ class Education(_Model):
     id: str
     institution: str
     degree: str
-    start: date | None = None
-    end: date | None = None
+    start: PartialDate | None = None
+    end: PartialDate | None = None
     notes: list[str] = Field(default_factory=list)
 
 
@@ -90,6 +109,7 @@ class MasterResume(_Model):
     projects: list[Project] = Field(default_factory=list)
     skills: list[SkillGroup] = Field(default_factory=list)
     education: list[Education] = Field(default_factory=list)
+    interests: str | None = None
 
     @model_validator(mode="after")
     def _ids_are_unique(self) -> MasterResume:
