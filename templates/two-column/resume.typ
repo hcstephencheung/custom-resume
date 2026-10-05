@@ -108,6 +108,8 @@
           txt(item)
           v(4pt)
         }
+      } else if get(s, "text") != none {
+        txt(s.text)
       }
     })
   }

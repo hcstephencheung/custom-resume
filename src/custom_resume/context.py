@@ -75,6 +75,8 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
             for e in master.education
         ]
         sidebar.append({"title": "Education", "entries": entries})
+    if master.interests:
+        sidebar.append({"title": "Interests", "text": master.interests})
 
     sections: list[dict[str, Any]] = []
     if master.summaries:
@@ -97,8 +99,6 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
             for p in master.projects
         ]
         sections.append({"title": "Projects", "entries": entries})
-    if master.interests:
-        sections.append({"title": "Interests", "text": master.interests})
 
     return {
         "name": basics.name,

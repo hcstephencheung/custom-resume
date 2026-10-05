@@ -4,7 +4,8 @@
 #
 # Right-column `sections` are dynamic: any number, in any order. A section has
 # either `text` (a paragraph) or `entries` (heading/subheading/dates/bullets/stack).
-# Left-column `sidebar` sections use `groups` (keyword lists), `entries`, or `items`.
+# Left-column `sidebar` sections use `groups` (keyword lists), `entries`, `items`,
+# or `text` (a paragraph).
 
 name: Jane Doe
 headline: Senior Software Engineer
