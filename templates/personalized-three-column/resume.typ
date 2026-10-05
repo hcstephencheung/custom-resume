@@ -202,7 +202,7 @@
 #top
 #v(14pt)
 #grid(
-  columns: (2.3in, 1fr),
+  columns: (2.6in, 1fr),
   column-gutter: 0.25in,
   // Both columns start flush, so the panel's top border lines up with the
   // Experience title.
