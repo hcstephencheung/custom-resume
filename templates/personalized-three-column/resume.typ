@@ -22,7 +22,7 @@
   yaml("mock.yaml")
 }
 
-#let cream = rgb("#fdfff1")  // page background
+#let cream = rgb("#fcffe7")  // page background
 #let blue = rgb("#3657d9")   // name, section titles, "Why I'm a fit" border
 // Exact complement of the blue (hue 48°). Shapes only: as text it is 1.6:1
 // on cream, too faint to read.
