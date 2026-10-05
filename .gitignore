@@ -13,6 +13,9 @@ build/
 # Generated resumes
 output/
 
+# Personal resumes (<role>-<date>.resume.yaml) hold contact details; keep them local
+*.resume.yaml
+
 # Secrets
 .env
 .env.*
