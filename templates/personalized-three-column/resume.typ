@@ -106,7 +106,7 @@
 #let left-column = {
   if get(data, "personalized") != none {
     fit-panel
-    v(14pt)
+    v(22pt)
   }
 
   section-title("Contact")
@@ -190,6 +190,7 @@
 #grid(
   columns: (2.3in, 1fr),
   column-gutter: 0.25in,
-  // The right column starts at the panel's inset so the first titles line up.
-  left-column, pad(top: if get(data, "personalized") != none { 10pt } else { 0pt }, right-column),
+  // Both columns start flush, so the panel's top border lines up with the
+  // Experience title.
+  left-column, right-column,
 )
