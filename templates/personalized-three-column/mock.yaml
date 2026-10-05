@@ -3,9 +3,10 @@
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
 # Top section: name, headline, subheadline, summary.
-# Left column: `personalized` (shown as "Why I'm a fit"): a paragraph, or a list
-# of points, each plain text or `company` + `text` (shown as "At <company>, ..."),
-# then `contact` and `education`.
+# Full-width row: `personalized` (shown as "Why I'm a fit"): a paragraph, or a
+# list of points, each plain text or `company` + `text`, where the text mentions
+# the company and each mention is highlighted.
+# Left column: `contact` and `education`.
 # Right column: `experience` as a timeline of roles (bullets aren't shown), then
 # `skills` and `interests`.
 # Bottom margin: `disclaimer`, one line.
@@ -52,11 +53,11 @@ education:
 
 personalized:
   - company: Acme Corp
-    text: cut median page load by 40% by migrating the storefront to server components
+    text: Cut median page load on Acme Corp's storefront by 40% by migrating to server components
   - company: Acme Corp
-    text: rebuilt CI on remote caching, dropping p50 pipeline time from 22 to 6 minutes
+    text: Rebuilt CI on remote caching at Acme Corp, dropping p50 pipeline time from 22 to 6 minutes
   - company: Initech
-    text: designed a GraphQL gateway federating 30 internal services at 2k requests per second
+    text: Designed Initech's GraphQL gateway, federating 30 internal services at 2k requests per second
 
 interests: >-
   Trail running, film photography, and contributing to open-source developer
