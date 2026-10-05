@@ -197,7 +197,7 @@
 #top
 #v(14pt)
 #grid(
-  columns: (1.9in, 1fr, 1.8in),
+  columns: (1.7in, 1fr, 1.65in),
   column-gutter: 0.2in,
   left-column, middle-column, right-column,
 )
