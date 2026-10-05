@@ -42,6 +42,14 @@ uv pip install -e '.[dev]'
 cp resume/master.example.yaml resume/master.yaml
 ```
 
+Personal resumes live in `resume/` as `<role>-<date>.resume.yaml`, for example
+`software-engineer-2026-09.resume.yaml`. They use the master spec schema and are
+gitignored, so your contact details stay local:
+
+```sh
+resume validate resume/software-engineer-2026-09.resume.yaml
+```
+
 ## Usage
 
 ```sh
