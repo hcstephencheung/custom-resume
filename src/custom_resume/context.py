@@ -1,9 +1,11 @@
 """Turn a master resume spec into the data a template renders.
 
 Templates take a flat, presentation-shaped dict (see templates/*/mock.yaml):
-name, headline, subheadline, contact, sidebar sections and main sections. This maps every
-item in a master spec into that shape. Choosing which items to include for a
-particular job is the tailoring step's job, not this module's.
+name, headline, subheadline, contact, sidebar sections and main sections, plus
+the summary, experience, skills, education, interests and personalized note as
+standalone fields for templates that place each piece themselves. This maps
+every item in a master spec into that shape. Choosing which items to include
+for a particular job is the tailoring step's job, not this module's.
 """
 
 from __future__ import annotations
@@ -57,24 +59,21 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
         url = str(link.url)
         contact.append({"label": link.label, "value": _display_url(url), "href": url})
 
+    skills = [{"name": g.name, "items": g.items} for g in master.skills]
+    education = [
+        {
+            "heading": e.institution,
+            "subheading": e.degree,
+            "dates": format_range(e.start, e.end, open_ended=False),
+        }
+        for e in master.education
+    ]
+
     sidebar: list[dict[str, Any]] = []
-    if master.skills:
-        sidebar.append(
-            {
-                "title": "Skills",
-                "groups": [{"name": g.name, "items": g.items} for g in master.skills],
-            }
-        )
-    if master.education:
-        entries = [
-            {
-                "heading": e.institution,
-                "subheading": e.degree,
-                "dates": format_range(e.start, e.end, open_ended=False),
-            }
-            for e in master.education
-        ]
-        sidebar.append({"title": "Education", "entries": entries})
+    if skills:
+        sidebar.append({"title": "Skills", "groups": skills})
+    if education:
+        sidebar.append({"title": "Education", "entries": education})
 
     sections: list[dict[str, Any]] = []
     if master.summaries:
@@ -107,4 +106,12 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
         "contact": contact,
         "sidebar": sidebar,
         "sections": sections,
+        # The same content as standalone fields, for templates that place each
+        # piece themselves rather than rendering `sections` in order.
+        "summary": master.summaries[0].text if master.summaries else None,
+        "experience": [_experience_entry(e) for e in master.experience],
+        "skills": skills,
+        "education": education,
+        "interests": master.interests,
+        "personalized": master.personalized,
     }
