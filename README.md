@@ -77,8 +77,9 @@ typst watch templates/two-column/resume.typ --font-path fonts --ignore-system-fo
   full-width top section (name, headline, summary), then two columns. Left: a
   blue-bordered "Why I'm a fit" panel with the spec's `personalized` note (a
   paragraph or a list of bullets), set larger than the rest, then contact and
-  education. Right: a gold experience timeline, then skills and interests. Keep
-  experience to about two bullets per role so it fits.
+  education. Right: a gold experience timeline, then skills and interests. An
+  optional `disclaimer` sits on one line in the bottom margin. Keep experience to about
+  two bullets per role so it fits.
 
   ```sh
   resume preview templates/personalized-three-column --data resume/<role>-<date>.resume.yaml

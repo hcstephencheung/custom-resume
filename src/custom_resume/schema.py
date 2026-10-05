@@ -115,6 +115,8 @@ class MasterResume(_Model):
     # Written for a specific application, e.g. why this company or role: a
     # paragraph, or a list of short points rendered as bullets.
     personalized: str | list[str] | None = None
+    # A short note shown at the very end of the resume, e.g. how it was made.
+    disclaimer: str | None = None
 
     @model_validator(mode="after")
     def _ids_are_unique(self) -> MasterResume:
