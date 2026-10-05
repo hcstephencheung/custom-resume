@@ -22,8 +22,7 @@
 #let sidebar-muted = rgb("#a9a7a3")
 #let sidebar-rule = rgb("#6b6a67")
 
-#let display-font = "Bebas Neue"
-#let body-font = "Glacial Indifference"
+#let font = "Space Grotesk"
 
 #let get(d, key) = d.at(key, default: none)
 // YAML turns values like `2016` into numbers; text needs strings.
@@ -37,7 +36,7 @@
   // Drawn as a page background so the sidebar colour repeats on every page.
   background: place(left + top, rect(width: 25%, height: 100%, fill: ink)),
 )
-#set text(font: body-font, size: 9.5pt, fill: ink, ligatures: false)
+#set text(font: font, size: 9.5pt, fill: ink, ligatures: false)
 #set par(leading: 0.6em, spacing: 0.6em)
 #set list(indent: 0pt, body-indent: 6pt, spacing: 0.45em)
 #set heading(bookmarked: false)
@@ -47,7 +46,7 @@
 #let sidebar-section(title, body) = {
   // Sticky keeps a section title on the same page as its first line of content.
   block(sticky: true, below: 6pt, {
-    heading(level: 2, text(font: display-font, size: 15pt, weight: "regular", tracking: 0.06em, title))
+    heading(level: 2, text(size: 11pt, weight: "bold", tracking: 0.06em, upper(title)))
     v(3pt)
     line(length: 100%, stroke: 0.75pt + sidebar-rule)
   })
@@ -98,7 +97,7 @@
 // ---------- Main ----------
 
 #let header = {
-  text(font: display-font, size: 46pt, tracking: 0.04em, data.name)
+  text(size: 38pt, weight: "bold", tracking: -0.02em, data.name)
   if get(data, "headline") != none {
     v(-6pt)
     text(size: 12pt, tracking: 0.08em, upper(data.headline))
