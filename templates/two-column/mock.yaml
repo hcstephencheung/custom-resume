@@ -3,7 +3,7 @@
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
 # Right-column `sections` are dynamic: any number, in any order. A section has
-# either `text` (a paragraph) or `entries` (heading/subheading/dates/bullets).
+# either `text` (a paragraph) or `entries` (heading/subheading/dates/bullets/stack).
 # Left-column `sidebar` sections use `groups` (keyword lists), `entries`, or `items`.
 
 name: Jane Doe

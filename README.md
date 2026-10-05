@@ -30,6 +30,7 @@ jobs/<job>.md       ─┘
 | `templates/<name>/` | Typst templates: `resume.typ` plus `mock.yaml` sample content |
 | `fonts/` | Vendored fonts (SIL OFL) used by the templates |
 | `src/custom_resume/schema.py` | Pydantic schema for the master spec |
+| `src/custom_resume/context.py` | Maps a master spec to the data a template renders |
 | `src/custom_resume/render.py` | Compiles a template to PDF with Typst |
 | `src/custom_resume/cli.py` | `resume` CLI entry point |
 | `output/` | Generated resumes (gitignored) |
@@ -55,6 +56,7 @@ resume validate resume/software-engineer-2026-09.resume.yaml
 ```sh
 resume validate resume/master.yaml   # check the spec against the schema
 resume preview templates/two-column  # render a template with its mock data -> output/two-column.pdf
+resume preview --data resume/software-engineer-2026-09.resume.yaml  # render a master spec -> output/software-engineer-2026-09.pdf
 ```
 
 ## Templates

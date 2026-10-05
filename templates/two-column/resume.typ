@@ -144,6 +144,10 @@
     v(1pt)
     list(..e.bullets.map(txt))
   }
+  if get(e, "stack") != none and e.stack.len() > 0 {
+    v(1pt)
+    text(size: 8.5pt, fill: muted)[Stack: #e.stack.map(txt).join(", ")]
+  }
 })
 
 #let main-section(s) = {

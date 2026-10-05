@@ -4,6 +4,7 @@ from typing import Annotated
 import typer
 from pydantic import ValidationError
 
+from custom_resume.context import context_from_master
 from custom_resume.render import load_mock, render_pdf
 from custom_resume.schema import load_master
 
@@ -37,10 +38,26 @@ def preview(
     template: Annotated[Path, typer.Argument(exists=True, file_okay=False)] = Path(
         "templates/two-column"
     ),
+    data: Annotated[
+        Path | None,
+        typer.Option(
+            exists=True, dir_okay=False, help="Master spec to render instead of mock data."
+        ),
+    ] = None,
     out: Annotated[Path | None, typer.Option(help="Output PDF path.")] = None,
 ) -> None:
-    """Render a template with its bundled mock data."""
-    out = out or Path("output") / f"{template.name}.pdf"
+    """Render a template with a master spec (--data), or with its bundled mock data."""
+    if data is None:
+        context = load_mock(template)
+        out = out or Path("output") / f"{template.name}.pdf"
+    else:
+        try:
+            context = context_from_master(load_master(data))
+        except ValidationError as e:
+            typer.secho(f"{data}: invalid\n{e}", fg=typer.colors.RED, err=True)
+            raise typer.Exit(1) from e
+        stem = data.name.removesuffix(".yaml").removesuffix(".resume")
+        out = out or Path("output") / f"{stem}.pdf"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_bytes(render_pdf(template, load_mock(template)))
+    out.write_bytes(render_pdf(template, context))
     typer.secho(f"wrote {out}", fg=typer.colors.GREEN)

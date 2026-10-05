@@ -10,6 +10,7 @@ layout.
 uv pip install -e '.[dev]'           # install
 ruff check . && ruff format --check . # lint
 resume preview templates/two-column  # render a template with its mock data
+resume preview --data <spec>.yaml    # render a master spec with a template
 ```
 
 ## Git and PR conventions
