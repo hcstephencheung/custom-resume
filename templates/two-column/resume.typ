@@ -6,7 +6,9 @@
 //   typst watch templates/two-column/resume.typ --font-path fonts --ignore-system-fonts
 //
 // ATS notes: keep tracking <= 0.08em (wider tracking is extracted as
-// "S P A C E D" text) and ligatures off ("ﬁ" glyphs break keyword matching).
+// "S P A C E D" text), ligatures off ("ﬁ" glyphs break keyword matching) and
+// hyphenation off ("Type-Script" breaks it too). Kerning is off because
+// Space Grotesk tightens "tt" enough that some parsers read "cut ting".
 
 #let data = if "data" in sys.inputs {
   json(bytes(sys.inputs.data))
@@ -44,7 +46,7 @@
   // Drawn as a page background so the sidebar colour repeats on every page.
   background: place(left + top, rect(width: sidebar-width, height: 100%, fill: blue)),
 )
-#set text(font: font, size: 9.5pt, fill: ink, ligatures: false)
+#set text(font: font, size: 9.5pt, fill: ink, kerning: false, ligatures: false, hyphenate: false)
 #set par(leading: 0.6em, spacing: 0.6em)
 #set list(indent: 0pt, body-indent: 6pt, spacing: 0.45em)
 #set heading(bookmarked: false)
@@ -185,6 +187,6 @@
 #place(
   top + left,
   dx: -(sidebar-width + 0.5in),
-  block(width: sidebar-width, inset: (left: 0.3in, right: 0.25in), sidebar),
+  block(width: sidebar-width, inset: (left: 0.3in, right: 0.2in), sidebar),
 )
 #main
