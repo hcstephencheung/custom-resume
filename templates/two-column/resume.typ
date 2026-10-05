@@ -28,6 +28,9 @@
 
 #let font = "Space Grotesk"
 
+// 25% of the US Letter page width.
+#let sidebar-width = 2.125in
+
 #let get(d, key) = d.at(key, default: none)
 // YAML turns values like `2016` into numbers; text needs strings.
 #let txt(v) = if type(v) == str { v } else { str(v) }
@@ -35,10 +38,11 @@
 #set document(title: data.name + " – Resume", author: data.name)
 #set page(
   paper: "us-letter",
-  margin: (top: 0.6in, bottom: 0.5in, x: 0pt),
+  // The main column flows in the page body; the sidebar sits in the left margin.
+  margin: (top: 0.6in, bottom: 0.5in, left: sidebar-width + 0.5in, right: 0.6in),
   fill: cream,
   // Drawn as a page background so the sidebar colour repeats on every page.
-  background: place(left + top, rect(width: 25%, height: 100%, fill: blue)),
+  background: place(left + top, rect(width: sidebar-width, height: 100%, fill: blue)),
 )
 #set text(font: font, size: 9.5pt, fill: ink, ligatures: false)
 #set par(leading: 0.6em, spacing: 0.6em)
@@ -58,6 +62,14 @@
   v(18pt)
 }
 
+// Shrinks a value such as an email or URL to fit on one line instead of
+// wrapping: a line break inside an address splits it in extracted text.
+// Below 80% it would be unreadable, so a value that still doesn't fit wraps.
+#let fit(body) = layout(size => {
+  let scale = calc.max(0.8, size.width / measure(body).width)
+  if scale >= 1 { body } else { text(size: 1em * scale, body) }
+})
+
 #let sidebar-label(body) = text(size: 7pt, tracking: 0.06em, fill: sidebar-muted, upper(body))
 
 #let sidebar = {
@@ -67,7 +79,7 @@
     for c in data.contact {
       sidebar-label(c.label)
       linebreak()
-      if get(c, "href") != none { link(c.href, txt(c.value)) } else { txt(c.value) }
+      fit(if get(c, "href") != none { link(c.href, txt(c.value)) } else { txt(c.value) })
       v(6pt)
     }
   })
@@ -162,11 +174,13 @@
 
 #show heading: it => block(above: 0pt, below: 0pt, it.body)
 
-// The header cell is listed first so the name comes first in the PDF's text
-// order; explicit x/y places it visually at the top of the right column.
-#grid(
-  columns: (25%, 1fr),
-  grid.cell(x: 1, y: 0, inset: (left: 0.5in, right: 0.6in), header),
-  grid.cell(x: 0, y: 0, rowspan: 2, inset: (left: 0.3in, right: 0.25in), sidebar),
-  grid.cell(x: 1, y: 1, inset: (left: 0.5in, right: 0.6in), main),
+// Source order sets the PDF's text order: name, then sidebar, then main, at any
+// length. The sidebar is pinned into the left margin of page 1, so it must fit
+// on one page; the main column flows onto as many pages as it needs.
+#header
+#place(
+  top + left,
+  dx: -(sidebar-width + 0.5in),
+  block(width: sidebar-width, inset: (left: 0.3in, right: 0.25in), sidebar),
 )
+#main
