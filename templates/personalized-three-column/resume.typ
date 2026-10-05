@@ -25,7 +25,7 @@
 #let blue = rgb("#3657d9")   // name, section titles, "Why I'm a fit" border
 // Exact complement of the blue (hue 48°). Shapes only: as text it is 1.6:1
 // on cream, too faint to read.
-#let gold = rgb("#f5c919")   // headline bar, experience timeline, skill name underlines
+#let gold = rgb("#f5c919")   // headline bar, experience timeline
 #let ink = rgb("#262626")    // body text
 #let muted = rgb("#5c5f52")  // secondary text, labels
 
@@ -167,11 +167,12 @@
     v(12pt)
     section-title("Skills")
     grid(
-      columns: (1.05in, 1fr),
+      // The name column sizes to the longest name, so names never wrap.
+      columns: (auto, 1fr),
       column-gutter: 8pt,
       row-gutter: 4pt,
       ..data.skills.map(g => (
-        pad(top: 1.5pt, underline(stroke: 1pt + gold, offset: 2pt, label(g.name))),
+        pad(top: 1.5pt, label(g.name)),
         // Each item stays on one line ("CSS/SCSS", not "CSS/" + "SCSS"), so
         // lines only break between items.
         g.items.map(i => box(txt(i))).join(", "),
