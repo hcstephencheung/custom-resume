@@ -71,10 +71,21 @@ needs the [Typst CLI](https://github.com/typst/typst):
 typst watch templates/two-column/resume.typ --font-path fonts --ignore-system-fonts
 ```
 
-- **two-column**: dark 25% sidebar (contact, keyword groups, education) and a
-  main column with any number of sections. Built to stay ATS-parseable: name
-  first in reading order, plain-text contact labels, no icons, skill bars or
-  images, letter-spacing kept tight and ligatures off.
+- **two-column**: blue 25% sidebar (contact, keyword groups, education) and a
+  main column with any number of sections. Flows onto extra pages as needed.
+- **personalized-three-column**: single page on one cream background. A
+  full-width top section (name, headline, summary), then three columns:
+  contact, skills and education; a blue-bordered panel with a personalized note
+  (the spec's `personalized` field) and interests at its foot; and a gold
+  experience timeline. Keep experience to a bullet or two per role so it fits.
+
+  ```sh
+  resume preview templates/personalized-three-column --data resume/<role>-<date>.resume.yaml
+  ```
+
+Both are built to stay ATS-parseable: name first in reading order, plain-text
+contact labels, no icons, skill bars or images, tight letter-spacing, and
+ligatures, hyphenation and kerning off.
 
 ## Roadmap
 

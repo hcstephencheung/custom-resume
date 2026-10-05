@@ -29,5 +29,5 @@ resume preview --data <spec>.yaml    # render a master spec with a template
 Templates are Typst files (`templates/<name>/resume.typ`) compiled to PDF by
 `render.py`. They must stay ATS-parseable (see the Templates section of
 README.md). After changing one, run `resume preview`, extract the PDF text
-(e.g. with pypdf), and check the reading order (name, then sidebar, then main)
-and that headings don't come out letter-spaced.
+(e.g. with pypdf), and check the reading order (name first, then the columns
+left to right) and that headings don't come out letter-spaced.
