@@ -185,6 +185,6 @@
 #place(
   top + left,
   dx: -(sidebar-width + 0.5in),
-  block(width: sidebar-width, inset: (left: 0.3in, right: 0.25in), sidebar),
+  block(width: sidebar-width, inset: (left: 0.3in, right: 0.2in), sidebar),
 )
 #main
