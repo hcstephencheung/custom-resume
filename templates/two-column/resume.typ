@@ -98,8 +98,9 @@
         }
       } else if get(s, "entries") != none {
         for e in s.entries {
-          text(weight: "bold", upper(e.heading))
-          if get(e, "subheading") != none { linebreak(); e.subheading }
+          // Heading and subheading share the plain body style.
+          txt(e.heading)
+          if get(e, "subheading") != none { linebreak(); txt(e.subheading) }
           if get(e, "dates") != none { linebreak(); text(size: 8pt, fill: sidebar-muted, txt(e.dates)) }
           v(8pt)
         }
