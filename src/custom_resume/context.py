@@ -2,11 +2,10 @@
 
 Templates take a flat, presentation-shaped dict (see templates/*/mock.yaml):
 name, headline, subheadline, contact, sidebar sections and main sections, plus
-the summary, experience, skills, education, interests, personalized note and
-disclaimer as standalone fields for templates that place each piece
-themselves. This maps every item in a master spec into that shape. Choosing
-which items to include for a particular job is the tailoring step's job, not
-this module's.
+the summary, experience, skills, education, interests and disclaimer as
+standalone fields for templates that place each piece themselves. This maps
+every item in a master spec into that shape. Choosing which items to include
+for a particular job is the tailoring step's job, not this module's.
 """
 
 from __future__ import annotations
@@ -44,13 +43,6 @@ def _experience_entry(exp: Experience) -> dict[str, Any]:
         "bullets": [b.text for b in exp.bullets],
         "stack": exp.stack,
     }
-
-
-def _personalized(master: MasterResume) -> str | list[Any] | None:
-    note = master.personalized
-    if isinstance(note, list):
-        return [p if isinstance(p, str) else p.model_dump() for p in note]
-    return note
 
 
 def context_from_master(master: MasterResume) -> dict[str, Any]:
@@ -123,6 +115,5 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
         "skills": skills,
         "education": education,
         "interests": master.interests,
-        "personalized": _personalized(master),
         "disclaimer": master.disclaimer,
     }
