@@ -1,0 +1,79 @@
+# Mock content for previewing the personalized-three-column template:
+#   resume preview templates/personalized-three-column
+# resume.typ also falls back to this file when compiled directly with Typst.
+#
+# Top section: name, headline, subheadline, summary.
+# Left column: `contact`, then `sidebar` sections (`groups`, `entries`, `items`
+# or `text`). Middle column: `personalized`, with `interests` at its foot.
+# Right column: `experience` as a timeline; keep it to a bullet or two per role
+# so the resume fits on one page.
+
+name: Jane Doe
+headline: Senior Software Engineer
+subheadline: Full-Stack (TypeScript · React · Node.js)
+
+summary: >-
+  Senior software engineer with 8 years of experience building fast, accessible
+  web applications and the developer tooling behind them. Known for turning
+  slow, fragile systems into fast, reliable ones, and for growing the engineers
+  around me.
+
+contact:
+  - label: Email
+    value: jane.doe@example.com
+    href: mailto:jane.doe@example.com
+  - label: Phone
+    value: +1 416-555-0142
+  - label: Location
+    value: Toronto, ON
+  - label: LinkedIn
+    value: linkedin.com/in/janedoe
+    href: https://linkedin.com/in/janedoe
+  - label: GitHub
+    value: github.com/janedoe
+    href: https://github.com/janedoe
+
+sidebar:
+  - title: Skills
+    groups:
+      - name: Languages
+        items: [TypeScript, JavaScript, Python, Go, SQL]
+      - name: Frontend
+        items: [React, Next.js, Server Components, CSS, Web Performance, Accessibility (WCAG 2.1)]
+      - name: Backend
+        items: [Node.js, GraphQL, REST APIs, PostgreSQL, Redis]
+      - name: Platform
+        items: [GitHub Actions, Bazel, Docker, Kubernetes, AWS]
+  - title: Education
+    entries:
+      - heading: University of Toronto
+        subheading: B.A.Sc. Computer Engineering
+        dates: 2013 – 2017
+
+personalized: >-
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat.
+
+interests: >-
+  Trail running, film photography, and contributing to open-source developer
+  tools on weekends.
+
+experience:
+  - heading: Acme Corp
+    subheading: Senior Software Engineer
+    location: Remote
+    dates: 2021 – Present
+    bullets:
+      - Cut median page load by 40% by migrating the storefront to server components and streaming SSR.
+  - heading: Initech
+    subheading: Software Engineer
+    location: Toronto, ON
+    dates: 2017 – 2021
+    bullets:
+      - Designed a GraphQL gateway federating 30 internal services at 2k requests per second.
+  - heading: Globex
+    subheading: Software Engineering Intern
+    location: Toronto, ON
+    dates: 2016
