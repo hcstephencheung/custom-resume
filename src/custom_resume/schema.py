@@ -112,6 +112,8 @@ class MasterResume(_Model):
     skills: list[SkillGroup] = Field(default_factory=list)
     education: list[Education] = Field(default_factory=list)
     interests: str | None = None
+    # Free text written for a specific application, e.g. why this company or role.
+    personalized: str | None = None
 
     @model_validator(mode="after")
     def _ids_are_unique(self) -> MasterResume:
