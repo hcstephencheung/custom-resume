@@ -1,9 +1,9 @@
 // Single-page resume on one cream background. A full-width top section holds
-// the name, headline and summary; below it, three columns:
-//   left:   contact, skills, education (the `sidebar` sections)
-//   middle: a blue-bordered panel with the personalized note and, at its
-//           foot, interests in smaller type
-//   right:  the experience timeline, drawn in gold
+// the name, headline and summary; below it, two columns:
+//   left:  a blue-bordered "Why I'm a fit" panel with the personalized note,
+//          then contact, skills and education (the `sidebar` sections)
+//   right: the experience timeline, drawn in gold, then interests in smaller
+//          type
 //
 // Data arrives as a JSON string in `sys.inputs.data` (see render.py). Compiled
 // on its own it falls back to mock.yaml, so the layout can be iterated on with:
@@ -13,7 +13,7 @@
 // "S P A C E D" text), ligatures off ("ﬁ" glyphs break keyword matching),
 // hyphenation off ("Type-Script" breaks it too) and kerning off (Space
 // Grotesk tightens "tt" enough that some parsers read "cut ting"). Text order
-// follows source order: top section, then left, middle and right columns.
+// follows source order: top section, then the left and right columns.
 
 #let data = if "data" in sys.inputs {
   json(bytes(sys.inputs.data))
@@ -22,7 +22,7 @@
 }
 
 #let cream = rgb("#fcffe7")  // page background
-#let blue = rgb("#3657d9")   // name, section titles, middle panel border
+#let blue = rgb("#3657d9")   // name, section titles, "Why I'm a fit" border
 // Exact complement of the blue (hue 48°). Shapes only: as text it is 1.6:1
 // on cream, too faint to read.
 #let gold = rgb("#f5c919")   // headline bar, experience timeline
@@ -94,7 +94,19 @@
 
 // ---------- Left column ----------
 
+// A blue-bordered panel holding the note written for this application.
+#let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
+  section-title("Why I'm a fit")
+  // Left-aligned: justifying a column this narrow opens wide gaps between words.
+  txt(data.personalized)
+})
+
 #let left-column = {
+  if get(data, "personalized") != none {
+    fit-panel
+    v(14pt)
+  }
+
   section-title("Contact")
   for c in data.contact {
     label(c.label)
@@ -110,7 +122,9 @@
       for g in s.groups {
         label(g.name)
         linebreak()
-        g.items.map(txt).join(", ")
+        // Each item stays on one line ("CSS/SCSS", not "CSS/" + "SCSS"), so
+        // lines only break between items.
+        g.items.map(i => box(txt(i))).join(", ")
         v(6pt)
       }
     } else if get(s, "entries") != none {
@@ -131,31 +145,6 @@
     v(10pt)
   }
 }
-
-// ---------- Middle column ----------
-
-// Takes an explicit height: inside a grid, `height: 100%` (and even `layout`)
-// resolves against the whole page body, so the panel would run past the
-// bottom margin.
-#let middle-column(height) = block(
-  width: 100%,
-  height: height,
-  stroke: 1pt + blue,
-  radius: 6pt,
-  inset: 10pt,
-  {
-    if get(data, "personalized") != none {
-      section-title("Personalized")
-      par(justify: true, txt(data.personalized))
-    }
-    // Pushes interests to the foot of the panel.
-    v(1fr)
-    if get(data, "interests") != none {
-      section-title("Interests")
-      text(size: 7.75pt, txt(data.interests))
-    }
-  },
-)
 
 // ---------- Right column ----------
 
@@ -185,25 +174,20 @@
   let entries = data.experience.map(entry).join(v(9pt))
   // The whole timeline is gold: the line as well as the dots.
   pad(left: 3pt, block(inset: (left: 9.5pt), stroke: (left: 1.5pt + gold), entries))
+  if get(data, "interests") != none {
+    v(14pt)
+    section-title("Interests")
+    text(size: 7.75pt, txt(data.interests))
+  }
 }
 
 // ---------- Page ----------
 
-// The columns fill the rest of the page so the middle panel's border runs to
-// the bottom margin; their height is the page body minus the measured top
-// section. The resume is meant to fit on this one page.
-#let gap = 14pt
-#layout(page => {
-  let columns-height = page.height - measure(block(width: page.width, top)).height - gap
-  stack(
-    spacing: gap,
-    block(width: 100%, top),
-    grid(
-      columns: (1.75in, 2.25in, 1fr),
-      rows: columns-height,
-      column-gutter: 0.2in,
-      // Side columns start at the panel's inset so all three titles line up.
-      pad(top: 10pt, left-column), middle-column(columns-height), pad(top: 10pt, right-column),
-    ),
-  )
-})
+#top
+#v(14pt)
+#grid(
+  columns: (2.6in, 1fr),
+  column-gutter: 0.25in,
+  // The right column starts at the panel's inset so the first titles line up.
+  left-column, pad(top: if get(data, "personalized") != none { 10pt } else { 0pt }, right-column),
+)

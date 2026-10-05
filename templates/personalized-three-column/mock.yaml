@@ -3,10 +3,10 @@
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
 # Top section: name, headline, subheadline, summary.
-# Left column: `contact`, then `sidebar` sections (`groups`, `entries`, `items`
-# or `text`). Middle column: `personalized`, with `interests` at its foot.
-# Right column: `experience` as a timeline; keep it to a bullet or two per role
-# so the resume fits on one page.
+# Left column: `personalized` (shown as "Why I'm a fit"), then `contact` and the
+# `sidebar` sections (`groups`, `entries`, `items` or `text`).
+# Right column: `experience` as a timeline, then `interests`. Keep experience to
+# a bullet or two per role so the resume fits on one page.
 
 name: Jane Doe
 headline: Senior Software Engineer
