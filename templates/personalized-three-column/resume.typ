@@ -1,9 +1,9 @@
 // Single-page resume on one cream background. A full-width top section holds
 // the name, headline and summary; below it, two columns:
 //   left:  a blue-bordered "Why I'm a fit" panel with the personalized note,
-//          then contact, skills and education (the `sidebar` sections)
-//   right: the experience timeline, drawn in gold, then interests in smaller
-//          type
+//          then contact and education
+//   right: the experience timeline, drawn in gold, then skills, then
+//          interests in smaller type
 //
 // Data arrives as a JSON string in `sys.inputs.data` (see render.py). Compiled
 // on its own it falls back to mock.yaml, so the layout can be iterated on with:
@@ -52,8 +52,8 @@
 
 // ---------- Shared pieces ----------
 
-#let section-title(title, rule: blue) = block(sticky: true, below: 6pt, {
-  heading(level: 2, text(size: 10pt, weight: "bold", tracking: 0.06em, fill: blue, upper(title)))
+#let section-title(title, rule: blue, size: 10pt) = block(sticky: true, below: 6pt, {
+  heading(level: 2, text(size: size, weight: "bold", tracking: 0.06em, fill: blue, upper(title)))
   v(3pt)
   line(length: 100%, stroke: 0.75pt + rule)
 })
@@ -94,11 +94,13 @@
 
 // ---------- Left column ----------
 
-// A blue-bordered panel holding the note written for this application.
+// A blue-bordered panel holding the note written for this application. Its
+// title and text are set 20% larger than the rest of the columns so the note
+// leads the page.
 #let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
-  section-title("Why I'm a fit")
+  section-title("Why I'm a fit", size: 12pt)
   // Left-aligned: justifying a column this narrow opens wide gaps between words.
-  txt(data.personalized)
+  text(size: 10.5pt, txt(data.personalized))
 })
 
 #let left-column = {
@@ -114,35 +116,16 @@
     fit(if get(c, "href") != none { link(c.href, txt(c.value)) } else { txt(c.value) })
     v(5pt)
   }
-  v(10pt)
 
-  for s in data.sidebar {
-    section-title(s.title)
-    if get(s, "groups") != none {
-      for g in s.groups {
-        label(g.name)
-        linebreak()
-        // Each item stays on one line ("CSS/SCSS", not "CSS/" + "SCSS"), so
-        // lines only break between items.
-        g.items.map(i => box(txt(i))).join(", ")
-        v(6pt)
-      }
-    } else if get(s, "entries") != none {
-      for e in s.entries {
-        txt(e.heading)
-        if get(e, "subheading") != none { linebreak(); txt(e.subheading) }
-        if get(e, "dates") != none { linebreak(); text(size: 8pt, fill: muted, txt(e.dates)) }
-        v(6pt)
-      }
-    } else if get(s, "items") != none {
-      for item in s.items {
-        txt(item)
-        v(4pt)
-      }
-    } else if get(s, "text") != none {
-      txt(s.text)
-    }
+  if get(data, "education") != none and data.education.len() > 0 {
     v(10pt)
+    section-title("Education")
+    for e in data.education {
+      txt(e.heading)
+      if get(e, "subheading") != none { linebreak(); txt(e.subheading) }
+      if get(e, "dates") != none { linebreak(); text(size: 8pt, fill: muted, txt(e.dates)) }
+      v(6pt)
+    }
   }
 }
 
@@ -171,11 +154,30 @@
 
 #let right-column = {
   section-title("Experience")
-  let entries = data.experience.map(entry).join(v(9pt))
+  let entries = data.experience.map(entry).join(v(7pt))
   // The whole timeline is gold: the line as well as the dots.
   pad(left: 3pt, block(inset: (left: 9.5pt), stroke: (left: 1.5pt + gold), entries))
+
+  // Skills as label / items rows: the wide right column fits each group on a
+  // line or two.
+  if get(data, "skills") != none and data.skills.len() > 0 {
+    v(12pt)
+    section-title("Skills")
+    grid(
+      columns: (1.05in, 1fr),
+      column-gutter: 8pt,
+      row-gutter: 4pt,
+      ..data.skills.map(g => (
+        pad(top: 1.5pt, label(g.name)),
+        // Each item stays on one line ("CSS/SCSS", not "CSS/" + "SCSS"), so
+        // lines only break between items.
+        g.items.map(i => box(txt(i))).join(", "),
+      )).flatten(),
+    )
+  }
+
   if get(data, "interests") != none {
-    v(14pt)
+    v(12pt)
     section-title("Interests")
     text(size: 7.75pt, txt(data.interests))
   }
@@ -186,7 +188,7 @@
 #top
 #v(14pt)
 #grid(
-  columns: (2.6in, 1fr),
+  columns: (2.3in, 1fr),
   column-gutter: 0.25in,
   // The right column starts at the panel's inset so the first titles line up.
   left-column, pad(top: if get(data, "personalized") != none { 10pt } else { 0pt }, right-column),

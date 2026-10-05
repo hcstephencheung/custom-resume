@@ -3,10 +3,10 @@
 # resume.typ also falls back to this file when compiled directly with Typst.
 #
 # Top section: name, headline, subheadline, summary.
-# Left column: `personalized` (shown as "Why I'm a fit"), then `contact` and the
-# `sidebar` sections (`groups`, `entries`, `items` or `text`).
-# Right column: `experience` as a timeline, then `interests`. Keep experience to
-# a bullet or two per role so the resume fits on one page.
+# Left column: `personalized` (shown as "Why I'm a fit"), then `contact` and
+# `education`.
+# Right column: `experience` as a timeline, then `skills` and `interests`. Keep
+# experience to a bullet or two per role so the resume fits on one page.
 
 name: Jane Doe
 headline: Senior Software Engineer
@@ -33,22 +33,20 @@ contact:
     value: github.com/janedoe
     href: https://github.com/janedoe
 
-sidebar:
-  - title: Skills
-    groups:
-      - name: Languages
-        items: [TypeScript, JavaScript, Python, Go, SQL]
-      - name: Frontend
-        items: [React, Next.js, Server Components, CSS, Web Performance, Accessibility (WCAG 2.1)]
-      - name: Backend
-        items: [Node.js, GraphQL, REST APIs, PostgreSQL, Redis]
-      - name: Platform
-        items: [GitHub Actions, Bazel, Docker, Kubernetes, AWS]
-  - title: Education
-    entries:
-      - heading: University of Toronto
-        subheading: B.A.Sc. Computer Engineering
-        dates: 2013 – 2017
+skills:
+  - name: Languages
+    items: [TypeScript, JavaScript, Python, Go, SQL]
+  - name: Frontend
+    items: [React, Next.js, Server Components, CSS, Web Performance, Accessibility (WCAG 2.1)]
+  - name: Backend
+    items: [Node.js, GraphQL, REST APIs, PostgreSQL, Redis]
+  - name: Platform
+    items: [GitHub Actions, Bazel, Docker, Kubernetes, AWS]
+
+education:
+  - heading: University of Toronto
+    subheading: B.A.Sc. Computer Engineering
+    dates: 2013 – 2017
 
 personalized: >-
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -67,13 +65,17 @@ experience:
     dates: 2021 – Present
     bullets:
       - Cut median page load by 40% by migrating the storefront to server components and streaming SSR.
+      - Rebuilt CI on remote caching, dropping p50 pipeline time from 22 to 6 minutes for 120 engineers.
   - heading: Initech
     subheading: Software Engineer
     location: Toronto, ON
     dates: 2017 – 2021
     bullets:
       - Designed a GraphQL gateway federating 30 internal services at 2k requests per second.
+      - Led WCAG 2.1 AA remediation across the customer dashboard, resolving 300+ issues.
   - heading: Globex
     subheading: Software Engineering Intern
     location: Toronto, ON
     dates: 2016
+    bullets:
+      - Built an internal analytics dashboard in React used daily by the sales team.
