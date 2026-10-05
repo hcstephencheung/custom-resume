@@ -16,7 +16,7 @@
   yaml("mock.yaml")
 }
 
-#let cream = rgb("#fcffe7")  // page background, text on blue
+#let cream = rgb("#fdfff1")  // page background, text on blue
 #let blue = rgb("#3657d9")   // sidebar, name, section titles
 // Exact complement of the blue (hue 48°). Shapes only: as text it is
 // 1.6:1 on cream and 3.8:1 on blue, too faint to read.
