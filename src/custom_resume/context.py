@@ -46,6 +46,13 @@ def _experience_entry(exp: Experience) -> dict[str, Any]:
     }
 
 
+def _personalized(master: MasterResume) -> str | list[Any] | None:
+    note = master.personalized
+    if isinstance(note, list):
+        return [p if isinstance(p, str) else p.model_dump() for p in note]
+    return note
+
+
 def context_from_master(master: MasterResume) -> dict[str, Any]:
     basics = master.basics
 
@@ -116,6 +123,6 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
         "skills": skills,
         "education": education,
         "interests": master.interests,
-        "personalized": master.personalized,
+        "personalized": _personalized(master),
         "disclaimer": master.disclaimer,
     }
