@@ -14,13 +14,14 @@
   yaml("mock.yaml")
 }
 
-#let paper = rgb("#e4e2de")
-#let ink = rgb("#2b2b2b")
-#let muted = rgb("#5a5956")
-#let rule = rgb("#b9b7b3")
-#let sidebar-ink = paper
-#let sidebar-muted = rgb("#a9a7a3")
-#let sidebar-rule = rgb("#6b6a67")
+#let cream = rgb("#fcffe7")  // page background, text on blue
+#let blue = rgb("#3657d9")   // sidebar, name, section titles, accents
+#let ink = rgb("#262626")    // body text
+#let muted = rgb("#5c5f52")  // secondary text on cream
+#let rule = rgb("#b4c0ef")   // timeline line
+#let sidebar-ink = cream
+#let sidebar-muted = rgb("#d0d8f7")
+#let sidebar-rule = rgb("#7f95e8")
 
 #let font = "Space Grotesk"
 
@@ -32,9 +33,9 @@
 #set page(
   paper: "us-letter",
   margin: (top: 0.6in, bottom: 0.5in, x: 0pt),
-  fill: paper,
+  fill: cream,
   // Drawn as a page background so the sidebar colour repeats on every page.
-  background: place(left + top, rect(width: 25%, height: 100%, fill: ink)),
+  background: place(left + top, rect(width: 25%, height: 100%, fill: blue)),
 )
 #set text(font: font, size: 9.5pt, fill: ink, ligatures: false)
 #set par(leading: 0.6em, spacing: 0.6em)
@@ -97,19 +98,19 @@
 // ---------- Main ----------
 
 #let header = {
-  text(size: 38pt, weight: "bold", tracking: -0.02em, data.name)
+  text(size: 38pt, weight: "bold", tracking: -0.02em, fill: blue, data.name)
   if get(data, "headline") != none {
     v(-6pt)
     text(size: 12pt, tracking: 0.08em, upper(data.headline))
     v(2pt)
-    line(length: 0.55in, stroke: 3pt + ink)
+    line(length: 0.55in, stroke: 3pt + blue)
   }
   v(18pt)
 }
 
 #let entry(e, timeline: false) = block(breakable: false, width: 100%, {
   if timeline {
-    place(dx: -14pt, dy: 2pt, circle(radius: 3pt, fill: ink))
+    place(dx: -14pt, dy: 2pt, circle(radius: 3pt, fill: blue))
   }
   grid(
     columns: (1fr, auto),
@@ -132,9 +133,9 @@
 
 #let main-section(s) = {
   block(sticky: true, below: 7pt, {
-    heading(level: 2, text(size: 11pt, weight: "bold", tracking: 0.08em, upper(s.title)))
+    heading(level: 2, text(size: 11pt, weight: "bold", tracking: 0.08em, fill: blue, upper(s.title)))
     v(4pt)
-    line(length: 100%, stroke: 0.75pt + ink)
+    line(length: 100%, stroke: 0.75pt + blue)
   })
   if get(s, "text") != none {
     par(justify: true, s.text)
