@@ -100,7 +100,11 @@
 #let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
   section-title("Why I'm a fit", size: 12pt)
   // Left-aligned: justifying a column this narrow opens wide gaps between words.
-  text(size: 10.5pt, txt(data.personalized))
+  // A paragraph, or a list of short points shown as bullets.
+  text(size: 10.5pt, {
+    let note = data.personalized
+    if type(note) == array { list(..note.map(txt)) } else { txt(note) }
+  })
 })
 
 #let left-column = {
