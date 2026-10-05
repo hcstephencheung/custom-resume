@@ -116,9 +116,17 @@
 
 #let header = {
   text(size: 38pt, weight: "bold", tracking: -0.02em, fill: blue, data.name)
-  if get(data, "headline") != none {
+  let headline = get(data, "headline")
+  let subheadline = get(data, "subheadline")
+  if headline != none {
     v(-6pt)
-    text(size: 12pt, tracking: 0.08em, upper(data.headline))
+    text(size: 12pt, tracking: 0.08em, upper(headline))
+  }
+  if subheadline != none {
+    v(if headline != none { -3pt } else { -6pt })
+    text(size: 9.5pt, fill: muted, subheadline)
+  }
+  if headline != none or subheadline != none {
     v(2pt)
     line(length: 0.55in, stroke: 3pt + gold)
   }
