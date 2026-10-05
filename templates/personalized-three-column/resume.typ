@@ -111,8 +111,6 @@
   if get(data, "personalized") != none {
     fit-panel
     v(22pt)
-    // Pushes contact and education to the foot of the column (see Page).
-    v(1fr)
   }
 
   section-title("Contact")
@@ -195,18 +193,10 @@
 
 #top
 #v(14pt)
-// The left column is made as tall as the right one, so contact and education
-// sit at its foot and end level with interests. Both columns start flush, so
-// the panel's top border lines up with the Experience title.
-#let left-width = 2.3in
-#let gutter = 0.25in
-#layout(page => {
-  let right-height = measure(block(width: page.width - left-width - gutter, right-column)).height
-  let left-height = measure(block(width: left-width, left-column)).height
-  grid(
-    columns: (left-width, 1fr),
-    column-gutter: gutter,
-    block(height: calc.max(left-height, right-height), left-column),
-    right-column,
-  )
-})
+#grid(
+  columns: (2.3in, 1fr),
+  column-gutter: 0.25in,
+  // Both columns start flush, so the panel's top border lines up with the
+  // Experience title.
+  left-column, right-column,
+)
