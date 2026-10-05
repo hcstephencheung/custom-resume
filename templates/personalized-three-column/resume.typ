@@ -1,7 +1,8 @@
-// Single-page resume on one cream background. A full-width top section holds
-// the name, headline and summary; below it, two columns:
-//   left:  a blue-bordered "Why I'm a fit" panel (40% of the page) with the
-//          personalized points, then contact and education
+// Single-page resume on one cream background:
+//   top:   name, headline and summary, full width
+//   fit:   a full-width, gold-bordered "Why I'm a fit" panel with the
+//          personalized points, company names highlighted in blue
+//   left:  contact and education
 //   right: the experience timeline (roles only, no bullets), drawn in gold,
 //          then skills, then interests in smaller type
 // and, if set, a one-line disclaimer in the bottom margin.
@@ -14,7 +15,8 @@
 // "S P A C E D" text), ligatures off ("ﬁ" glyphs break keyword matching),
 // hyphenation off ("Type-Script" breaks it too) and kerning off (Space
 // Grotesk tightens "tt" enough that some parsers read "cut ting"). Text order
-// follows source order: top section, then the left and right columns.
+// follows source order: top section, the fit panel, then the left and right
+// columns.
 
 #let data = if "data" in sys.inputs {
   json(bytes(sys.inputs.data))
@@ -23,10 +25,10 @@
 }
 
 #let cream = rgb("#fcffe7")  // page background
-#let blue = rgb("#3657d9")   // name, section titles, "Why I'm a fit" border
-// Exact complement of the blue (hue 48°). Mostly for shapes: as text it is
-// only 1.6:1 on cream, so it's used for short bold company names only.
-#let gold = rgb("#f5c919")   // headline bar, timeline, company names in "Why I'm a fit"
+#let blue = rgb("#3657d9")   // name, section titles, company names in "Why I'm a fit"
+// Exact complement of the blue (hue 48°). Shapes only: as text it is 1.6:1
+// on cream, too faint to read.
+#let gold = rgb("#f5c919")   // headline bar, timeline, "Why I'm a fit" border
 #let ink = rgb("#262626")    // body text
 #let muted = rgb("#5c5f52")  // secondary text, labels
 
@@ -100,19 +102,19 @@
   }
 }
 
-// ---------- Left column ----------
+// ---------- "Why I'm a fit" row ----------
 
-// A blue-bordered panel holding the note written for this application. Its
-// title and text are set 20% larger than the rest of the columns so the note
-// leads the page.
-#let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
+// A full-width, gold-bordered panel holding the points written for this
+// application. Its title and text are set 20% larger than the columns below
+// so the note leads the page.
+#let fit-panel = block(width: 100%, stroke: 1pt + gold, radius: 6pt, inset: 10pt, {
   section-title("Why I'm a fit", size: 12pt)
-  // Left-aligned: justifying a column this narrow opens wide gaps between words.
-  // A paragraph, or a list of points shown as bullets. A point can name the
-  // role it comes from, shown as "At <company>, <text>" with the company in
-  // bold gold.
+  // A point can name the company it comes from; the sentence mentions the
+  // company in its own words, and each mention is set in bold blue. The text
+  // itself stays plain, so extracted text reads naturally.
   let point(p) = if type(p) == dictionary {
-    [At #text(weight: "bold", fill: gold, txt(p.company)), #txt(p.text)]
+    let company = text(weight: "bold", fill: blue, txt(p.company))
+    txt(p.text).split(txt(p.company)).join(company)
   } else {
     txt(p)
   }
@@ -122,12 +124,9 @@
   })
 })
 
-#let left-column = {
-  if get(data, "personalized") != none {
-    fit-panel
-    v(22pt)
-  }
+// ---------- Left column ----------
 
+#let left-column = {
   section-title("Contact")
   for c in data.contact {
     label(c.label)
@@ -139,8 +138,6 @@
   if get(data, "education") != none and data.education.len() > 0 {
     v(10pt)
     section-title("Education")
-    // Gaps only between entries, so the column's last line can sit flush with
-    // the bottom of the right column.
     data.education.map(e => {
       txt(e.heading)
       if get(e, "subheading") != none { linebreak(); txt(e.subheading) }
@@ -206,12 +203,13 @@
 
 #top
 #v(14pt)
+#if get(data, "personalized") != none {
+  fit-panel
+  v(14pt)
+}
 #grid(
-  // 40% of the page width for the "Why I'm a fit" column.
-  columns: (3.4in, 1fr),
+  columns: (2.3in, 1fr),
   column-gutter: 0.25in,
-  // Both columns start flush, so the panel's top border lines up with the
-  // Experience title.
   left-column, right-column,
 )
 
