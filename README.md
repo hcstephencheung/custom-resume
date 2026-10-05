@@ -75,12 +75,12 @@ typst watch templates/two-column/resume.typ --font-path fonts --ignore-system-fo
   main column with any number of sections. Flows onto extra pages as needed.
 - **personalized-three-column**: single page on one cream background, built
   around a job-specific "Why I'm a fit" panel. A full-width top section (name,
-  headline, summary), then two columns. Left (40% of the page): the panel,
-  showing the spec's `personalized` note as a paragraph or a list of points,
-  where a `company` + `text` point reads "At <company>, ..." with the company in
-  gold; then contact and education. Right: a gold timeline of roles (no
-  bullets), then skills and interests. An optional `disclaimer` sits on one line
-  in the bottom margin. About five points keep it to one page.
+  headline, summary), then the panel on its own full-width row with a gold
+  border, showing the spec's `personalized` note as a paragraph or a list of
+  points. A `company` + `text` point mentions the company in its sentence, and
+  each mention is set in bold blue. Below: contact and education on the left,
+  and on the right a gold timeline of roles (no bullets), then skills and
+  interests. An optional `disclaimer` sits on one line in the bottom margin.
 
   ```sh
   resume preview templates/personalized-three-column --data resume/<role>-<date>.resume.yaml
