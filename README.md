@@ -77,8 +77,9 @@ typst watch templates/two-column/resume.typ --font-path fonts --ignore-system-fo
   resume tailored to one application. A full-width top section holds the name,
   headline and summary. Below it, three columns: skills and education; a gold
   experience timeline with a bullet or so per role; and contact and interests.
-  Under the columns, a blue-bordered "Why I'm a fit" row shows the spec's
-  `personalized` note as a paragraph or a list of points. Any company from the
+  Under the columns, blue-bordered full-width rows show the spec's `projects`
+  (as "Personal project(s)") and its `personalized` note (as "Why I'm a fit", a
+  paragraph or a list of points), when present. Any company from the
   experience list mentioned in the summary or the points is set in bold blue.
   An optional `disclaimer` sits on one line in the bottom margin.
 
