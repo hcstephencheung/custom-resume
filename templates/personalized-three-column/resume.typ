@@ -205,7 +205,8 @@
 // full-width section, without the panel border.
 #let projects-panel() = block(width: 100%, {
   section-title(if data.projects.len() == 1 { "Personal project" } else { "Personal projects" })
-  data.projects.map(p => {
+  // Each project stays whole, so its name never ends a page without its bullets.
+  data.projects.map(p => block(breakable: false, width: 100%, {
     text(size: 9.5pt, weight: "bold", txt(p.name))
     if get(p, "url") != none {
       h(6pt)
@@ -215,7 +216,7 @@
       v(1pt)
       list(..p.bullets.map(txt))
     }
-  }).join(v(8pt))
+  })).join(v(8pt))
 })
 
 // A full-width, blue-bordered panel under the columns holding the points
