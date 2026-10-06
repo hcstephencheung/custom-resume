@@ -3,8 +3,8 @@
 //   left:   skills and education
 //   middle: the experience timeline, drawn in gold, a bullet or so per role
 //   right:  contact, then interests in smaller type
-//   below:  full-width, blue-bordered panels under the columns: personal
-//           projects, then "Why I'm a fit" with the personalized points
+//   below:  full-width rows under the columns: personal projects, then a
+//           blue-bordered "Why I'm a fit" panel with the personalized points
 // and, if set, a one-line disclaimer in the bottom margin. Any company from the
 // experience list mentioned in the summary or the fit points is set in bold
 // blue.
@@ -197,12 +197,13 @@
 
 // ---------- Full-width rows under the columns ----------
 
-// Blue-bordered panels under the three columns. Built only when their data
-// is present, so they are functions rather than values.
+// Full-width rows under the three columns. Built only when their data is
+// present, so they are functions rather than values.
 #let panel(body) = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, body)
 
-// Personal projects: name (and link, if any) over its bullets.
-#let projects-panel() = panel({
+// Personal projects: name (and link, if any) over its bullets. A plain
+// full-width section, without the panel border.
+#let projects-panel() = block(width: 100%, {
   section-title(if data.projects.len() == 1 { "Personal project" } else { "Personal projects" })
   data.projects.map(p => {
     text(size: 9.5pt, weight: "bold", txt(p.name))
