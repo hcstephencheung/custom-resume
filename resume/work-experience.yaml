@@ -1,17 +1,18 @@
 # Stephen Cheung: the bank of work experience that personalized resumes are
-# built from. It holds every role and every bullet worth keeping, including
-# alternative wordings of the same work; a tailored resume
-# (resume/<name>.resume.yaml) copies the roles it needs and only the bullets
-# that fit the posting.
+# built from. It holds every role, personal project and bullet worth keeping,
+# including alternative wordings of the same work; a tailored resume
+# (resume/<name>.resume.yaml) copies the roles and projects it needs and only
+# the bullets that fit the posting.
 #
-# Entries use the same shape as `experience` in a resume spec, so they can be
-# copied in as they are. Bullet ids are unique across the bank; a reworded
-# variant gets its own id (bestbuy-tracking and bestbuy-tracking-reports).
+# Entries use the same shape as `experience` and `projects` in a resume spec,
+# so they can be copied in as they are. Bullet ids are unique across the bank;
+# a reworded variant gets its own id (bestbuy-tracking and
+# bestbuy-tracking-reports).
 # Add new or reworded bullets here first, then select them into a resume.
 #
 # Started from main-resume's experience, plus the reworded Best Buy tracking
-# bullet from ashby-personalized. It holds no contact details, so unlike the
-# resumes it is committed.
+# bullet from ashby-personalized and the Sunday personal project. It holds no
+# contact details, so unlike the resumes it is committed.
 
 experience:
   - id: findem
@@ -222,3 +223,24 @@ experience:
           Built e-commerce integrations for local businesses in the early days
           of the web using HTML, CSS, JavaScript, and jQuery.
         tags: [frontend, ecommerce]
+
+projects:
+  - id: proj-sunday
+    name: Sunday
+    url: https://github.com/hcstephencheung/sunday
+    tags: [ai, typescript, python, side-project, personal-finance]
+    bullets:
+      - id: sunday-what
+        text: >-
+          Sundays are budgeting days, so I built Sunday, a web app that uses AI
+          to help my wife with her monthly budget, in TypeScript and Python
+        tags: [ai, product, fullstack, personal-finance]
+      - id: sunday-how
+        text: >-
+          Parses credit card statements with AI and auto-classifies
+          transactions into categories based on her previous choices
+        tags: [ai, automation]
+      - id: sunday-impact
+        text: >-
+          Cut her monthly budgeting time from an hour to 10 minutes
+        tags: [impact]

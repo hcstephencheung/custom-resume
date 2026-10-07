@@ -51,11 +51,11 @@ gitignored, so your contact details stay local:
 resume validate resume/software-engineer-2026-09.resume.yaml
 ```
 
-Their experience comes from `resume/work-experience.yaml`, a bank of every role
-and bullet worth keeping, alternative wordings included. It holds no contact
-details, so it is committed. A personalized resume copies in the roles it needs
-and only the bullets that fit the posting; new or reworded bullets go into the
-bank first.
+Their experience and personal projects come from `resume/work-experience.yaml`,
+a bank of every role, project and bullet worth keeping, alternative wordings
+included. It holds no contact details, so it is committed. A personalized resume
+copies in the roles and projects it needs and only the bullets that fit the
+posting; new or reworded bullets go into the bank first.
 
 ## Usage
 
