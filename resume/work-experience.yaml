@@ -7,7 +7,7 @@
 # Entries use the same shape as `experience` and `projects` in a resume spec,
 # so they can be copied in as they are. Bullet ids are unique across the bank;
 # a reworded variant gets its own id (bestbuy-tracking and
-# bestbuy-tracking-reports).
+# bestbuy-first-engineer).
 # Add new or reworded bullets here first, then select them into a resume.
 #
 # Started from main-resume's experience, plus the reworded Best Buy tracking
@@ -153,16 +153,16 @@ experience:
     bullets:
       - id: bestbuy-tracking
         text: >-
+          Collaborated with Architects and designed a scalable approach for
+          frontend user interaction tracking, which powered reports for SVPs
+          to make business decisions in strategic planning.
+        tags: [analytics, react, redux, architecture]
+      - id: bestbuy-first-engineer
+        text: >-
           Hired as the first web engineer on the Data Analytics team;
           architected and implemented the first iterations of user behaviour
           tracking for the new React/Redux single-page app.
         tags: [analytics, react, redux, architecture]
-      - id: bestbuy-tracking-reports
-        text: >-
-          Collaborated with Architects and designed a scalable approach for
-          frontend user interaction tracking, which powered reports for SVPs
-          to make business decisions in strategic planning.
-        tags: [analytics, react, redux, architecture, business-impact]
       - id: bestbuy-standard
         text: >-
           Defined the tracking standard for bestbuy.ca and aligned every
