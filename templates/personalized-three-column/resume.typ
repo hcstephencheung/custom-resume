@@ -3,8 +3,8 @@
 //   left:   skills and education
 //   middle: the experience timeline, drawn in gold, a bullet or so per role
 //   right:  contact, then interests in smaller type
-//   fit:    a full-width, blue-bordered "Why I'm a fit" panel under the
-//           columns with the personalized points
+//   below:  full-width rows under the columns: personal projects, then a
+//           blue-bordered "Why I'm a fit" panel with the personalized points
 // and, if set, a one-line disclaimer in the bottom margin. Any company from the
 // experience list mentioned in the summary or the fit points is set in bold
 // blue.
@@ -18,7 +18,7 @@
 // hyphenation off ("Type-Script" breaks it too) and kerning off (Space
 // Grotesk tightens "tt" enough that some parsers read "cut ting"). Text order
 // follows source order: top section, the left, middle and right columns,
-// then the fit panel.
+// then the panels below.
 
 #let data = if "data" in sys.inputs {
   json(bytes(sys.inputs.data))
@@ -195,11 +195,33 @@
   }
 }
 
-// ---------- "Why I'm a fit" row ----------
+// ---------- Full-width rows under the columns ----------
+
+// Full-width rows under the three columns. Built only when their data is
+// present, so they are functions rather than values.
+#let panel(body) = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, body)
+
+// Personal projects: name (and link, if any) over its bullets. A plain
+// full-width section, without the panel border.
+#let projects-panel() = block(width: 100%, {
+  section-title(if data.projects.len() == 1 { "Personal project" } else { "Personal projects" })
+  // Each project stays whole, so its name never ends a page without its bullets.
+  data.projects.map(p => block(breakable: false, width: 100%, {
+    text(size: 9.5pt, weight: "bold", txt(p.name))
+    if get(p, "url") != none {
+      h(6pt)
+      text(size: 8pt, fill: muted, link(p.href, txt(p.url)))
+    }
+    if p.bullets.len() > 0 {
+      v(1pt)
+      list(..p.bullets.map(txt))
+    }
+  })).join(v(8pt))
+})
 
 // A full-width, blue-bordered panel under the columns holding the points
 // written for this application, with any company it mentions highlighted.
-#let fit-panel = block(width: 100%, stroke: 1pt + blue, radius: 6pt, inset: 10pt, {
+#let fit-panel() = panel({
   section-title("Why I'm a fit")
   let note = data.personalized
   if type(note) == array {
@@ -218,7 +240,11 @@
   column-gutter: 0.2in,
   left-column, middle-column, right-column,
 )
+#if get(data, "projects") != none and data.projects.len() > 0 {
+  v(14pt)
+  projects-panel()
+}
 #if get(data, "personalized") != none {
   v(14pt)
-  fit-panel
+  fit-panel()
 }

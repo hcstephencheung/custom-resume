@@ -24,6 +24,15 @@ resume preview --data <spec>.yaml    # render a master spec with a template
 - Open PRs with a title only. Leave the PR description empty, because the
   commit messages are the record.
 
+## Personalized resumes
+
+When asked for a resume personalized to a job posting, build its `experience`
+and `projects` from `resume/work-experience.yaml`: copy the roles, projects and
+bullets that fit the posting, with their ids and text unchanged. Write a new or reworded bullet into
+the bank first, under a new id, then select it. The bank is committed; the
+`*.resume.yaml` files hold contact details, so they are gitignored and must
+never be committed.
+
 ## Templates
 
 Templates are Typst files (`templates/<name>/resume.typ`) compiled to PDF by

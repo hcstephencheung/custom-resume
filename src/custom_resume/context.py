@@ -2,8 +2,8 @@
 
 Templates take a flat, presentation-shaped dict (see templates/*/mock.yaml):
 name, headline, subheadline, contact, sidebar sections and main sections, plus
-the summary, experience, skills, education, interests, personalized note and
-disclaimer as standalone fields for templates that place each piece
+the summary, experience, skills, education, interests, projects, personalized
+note and disclaimer as standalone fields for templates that place each piece
 themselves. This maps every item in a master spec into that shape. Choosing
 which items to include for a particular job is the tailoring step's job, not
 this module's.
@@ -116,6 +116,15 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
         "skills": skills,
         "education": education,
         "interests": master.interests,
+        "projects": [
+            {
+                "name": p.name,
+                "url": _display_url(str(p.url)) if p.url else None,
+                "href": str(p.url) if p.url else None,
+                "bullets": [b.text for b in p.bullets],
+            }
+            for p in master.projects
+        ],
         "personalized": master.personalized,
         "disclaimer": master.disclaimer,
     }

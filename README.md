@@ -51,6 +51,12 @@ gitignored, so your contact details stay local:
 resume validate resume/software-engineer-2026-09.resume.yaml
 ```
 
+Their experience and personal projects come from `resume/work-experience.yaml`,
+a bank of every role, project and bullet worth keeping, alternative wordings
+included. It holds no contact details, so it is committed. A personalized resume
+copies in the roles and projects it needs and only the bullets that fit the
+posting; new or reworded bullets go into the bank first.
+
 ## Usage
 
 ```sh
@@ -77,8 +83,9 @@ typst watch templates/two-column/resume.typ --font-path fonts --ignore-system-fo
   resume tailored to one application. A full-width top section holds the name,
   headline and summary. Below it, three columns: skills and education; a gold
   experience timeline with a bullet or so per role; and contact and interests.
-  Under the columns, a blue-bordered "Why I'm a fit" row shows the spec's
-  `personalized` note as a paragraph or a list of points. Any company from the
+  Under the columns, full-width rows show the spec's `projects` (as "Personal
+  project(s)") and its `personalized` note (as a blue-bordered "Why I'm a fit"
+  panel, a paragraph or a list of points), when present. Any company from the
   experience list mentioned in the summary or the points is set in bold blue.
   An optional `disclaimer` sits on one line in the bottom margin.
 

@@ -1,0 +1,246 @@
+# Stephen Cheung: the bank of work experience that personalized resumes are
+# built from. It holds every role, personal project and bullet worth keeping,
+# including alternative wordings of the same work; a tailored resume
+# (resume/<name>.resume.yaml) copies the roles and projects it needs and only
+# the bullets that fit the posting.
+#
+# Entries use the same shape as `experience` and `projects` in a resume spec,
+# so they can be copied in as they are. Bullet ids are unique across the bank;
+# a reworded variant gets its own id (bestbuy-tracking and
+# bestbuy-tracking-reports).
+# Add new or reworded bullets here first, then select them into a resume.
+#
+# Started from main-resume's experience, plus the reworded Best Buy tracking
+# bullet from ashby-personalized and the Sunday personal project. It holds no
+# contact details, so unlike the resumes it is committed.
+
+experience:
+  - id: findem
+    company: Findem
+    title: Senior Software Engineer
+    start: 2025-04
+    location: Vancouver, B.C.
+    tags: [fullstack, ai, observability, leadership]
+    stack: [TypeScript, React, Node.js, MongoDB, Docker Swarm]
+    bullets:
+      - id: findem-tracing
+        text: >-
+          Architected and implemented distributed tracing across the platform,
+          then used it to isolate and fix a long-standing memory issue, cutting
+          first-load API latency from 30 seconds to 5.
+        tags: [observability, distributed-tracing, architecture, performance, debugging, backend]
+      - id: findem-features
+        text: >-
+          Delivered features like consumption-based pricing, outreach redesign
+          built on new system definitions, and AI-summarized candidate profile
+          search — owning system design, implementation, and rollout for each.
+        tags: [fullstack, ai, system-design, product]
+      - id: findem-culture
+        text: >-
+          Led and established professional engineering team culture: recurring
+          product demo cadence, AI-generated diagrams for architecture reviews,
+          post-mortem reviews, and regular knowledge sharing.
+        tags: [leadership, culture, process]
+
+  - id: lumen5
+    company: Lumen5
+    title: Senior Software Engineer
+    start: 2020-12
+    end: 2025-04
+    location: Vancouver, B.C.
+    tags: [fullstack, ai, frontend, video]
+    stack: [TypeScript, React, Lexical, Jest, Cypress, Python, Django, GCP, Kubernetes, FFmpeg]
+    bullets:
+      - id: lumen5-voiceover
+        text: >-
+          Co-led the planning and end-to-end development of the
+          transcript-based voiceover and AI text-to-speech video editing
+          experience, used by 1,000+ monthly active users.
+        tags: [ai, text-to-speech, product, leadership, fullstack]
+      - id: lumen5-waveform
+        text: >-
+          Built internal waveform-analysis tooling with peaks.js to diagnose
+          hallucinations in AI-generated voiceovers, then used it to ship
+          automated post-processing that detects and repairs ElevenLabs
+          hallucinations occurring in up to 20% of generations for certain voices.
+        tags: [ai, audio, tooling, debugging, text-to-speech, quality]
+      - id: lumen5-lexical
+        text: >-
+          Fixed a race condition between Lumen5's unidirectional data flow and
+          LexicalJS's internal update scheduling, tracing it into the library's
+          source to resolve editor state desyncing during rapid user edits.
+        tags: [frontend, react, lexical, debugging, concurrency]
+      - id: lumen5-video-cutting
+        text: >-
+          Acted as primary tech lead in developing a new core capability of
+          video cutting via user's transcript, which had 2000+ MAPUs.
+          (video cutting feature)
+        tags: [video, collaboration, product]
+      - id: lumen5-features
+        text: >-
+          Delivered other platform features including user uploads, account
+          management flows, video translation tools, video recording tools and
+          more.
+        tags: [fullstack, product]
+      - id: lumen5-kubernetes
+        text: >-
+          Contributed to infrastructure-as-code by implementing the Kubernetes
+          CRD changes needed to carry out cluster upgrades.
+        tags: [infrastructure, kubernetes, devops]
+
+  - id: lighthouse-labs
+    company: Lighthouse Labs
+    title: Mentor (Contract, part-time — concurrent with Lumen5)
+    start: 2021-04
+    end: 2022-04
+    location: Remote
+    tags: [mentoring, teaching]
+    bullets:
+      - id: lighthouse-mentoring
+        text: >-
+          Mentored bootcamp students through office-hour sessions on React,
+          JavaScript, Node.js/Express, jQuery, and Ruby on Rails projects — a
+          web scheduling app, an order management system, and a Twitter-like
+          application.
+        tags: [mentoring, teaching, react, javascript, nodejs]
+
+  - id: realtor
+    company: realtor.com
+    title: Intermediate Software Engineer
+    start: 2020-04
+    end: 2020-11
+    location: Vancouver, B.C.
+    tags: [fullstack, integrations, frontend]
+    stack:
+      [Next.js, React, Redux, Redux-Saga, JavaScript, Node.js, AWS, Docker, Jenkins, Splunk, New Relic]
+    bullets:
+      - id: realtor-marketplace
+        text: >-
+          One of two engineers on the Sellers team; helped deliver the first
+          iteration of realtor.com/sell/sellers-marketplace.
+        tags: [product, fullstack]
+      - id: realtor-vendors
+        text: >-
+          Integrated 3 partner vendors into the marketplace, working directly
+          with Opendoor to define the API specifications behind the offer flow.
+        tags: [integrations, api-design, partners]
+      - id: realtor-node
+        text: >-
+          Built Node.js backend integrations with partner APIs and maintained
+          every Sellers team front end — realtor.com/sell, the Sellers’
+          Marketplace, and Agent Connection.
+        tags: [nodejs, backend, integrations, frontend]
+      - id: realtor-components
+        text: >-
+          Extended existing systems to support new features: shipped UI
+          components into the core component library and was the first team to
+          adopt the accounts team’s new sign-in.
+        tags: [frontend, component-library, react]
+      - id: realtor-pipelines
+        text: >-
+          Tuned Docker/Jenkins build pipelines for AWS deployments and added
+          custom application-health monitoring through Splunk and New Relic.
+        tags: [devops, ci, aws, observability]
+
+  - id: bestbuy
+    company: Best Buy Canada
+    title: Practice Lead, Data Analytics Implementation
+    start: 2017-02
+    end: 2020-04
+    location: Burnaby, B.C.
+    tags: [leadership, analytics, frontend, experimentation]
+    stack: [React, Redux, JavaScript, jQuery, Adobe DTM, Launch, Target]
+    bullets:
+      - id: bestbuy-tracking
+        text: >-
+          Hired as the first web engineer on the Data Analytics team;
+          architected and implemented the first iterations of user behaviour
+          tracking for the new React/Redux single-page app.
+        tags: [analytics, react, redux, architecture]
+      - id: bestbuy-tracking-reports
+        text: >-
+          Collaborated with Architects and designed a scalable approach for
+          frontend user interaction tracking, which powered reports for SVPs
+          to make business decisions in strategic planning.
+        tags: [analytics, react, redux, architecture, business-impact]
+      - id: bestbuy-standard
+        text: >-
+          Defined the tracking standard for bestbuy.ca and aligned every
+          engineer across 5 product delivery teams (2–4 engineers each) on it.
+        tags: [analytics, standards, leadership, cross-team]
+      - id: bestbuy-lead
+        text: >-
+          Promoted to Practice Lead: hired and mentored four software engineers
+          and scaled the team up to deliver personalized experiences on
+          bestbuy.ca.
+        tags: [leadership, hiring, mentoring, personalization]
+      - id: bestbuy-recommendations
+        text: >-
+          Architected and built recommendation widgets using Adobe Target and
+          Best Buy APIs.
+        tags: [personalization, recommendations, frontend]
+      - id: bestbuy-ab-tests
+        text: >-
+          Designed and ran A/B tests from business requirements, and worked
+          with the core web team to contribute winning components back to the
+          main codebase.
+        tags: [experimentation, ab-testing, collaboration]
+
+  - id: mobify
+    company: Mobify
+    title: Front-End Engineer
+    start: 2014-09
+    end: 2016-12
+    location: Vancouver, B.C.
+    tags: [frontend, mobile, client-facing]
+    stack:
+      [JavaScript, jQuery, HTML5, SCSS/BEM, DustJS, Grunt, AngularJS, Ember, Bootstrap]
+    bullets:
+      - id: mobify-brands
+        text: >-
+          Built responsive mobile web and app experiences for global brands
+          including British Telecom, Nordstrom Rack, Bosch, and Siemens on a
+          platform that re-rendered client HTML on the fly.
+        tags: [frontend, mobile, responsive]
+      - id: mobify-clients
+        text: >-
+          Delivered responsive web and app experiences directly for client
+          teams: translated their requirements into front-end architecture,
+          advised their engineers on implementation, and shipped weekly in agile
+          delivery cycles.
+        tags: [frontend, client-facing, architecture, agile]
+
+  - id: zkron
+    company: Zkron
+    title: Front-End Web Developer
+    start: 2012
+    end: 2014
+    location: Vancouver, B.C.
+    tags: [frontend, ecommerce]
+    bullets:
+      - id: zkron-ecommerce
+        text: >-
+          Built e-commerce integrations for local businesses in the early days
+          of the web using HTML, CSS, JavaScript, and jQuery.
+        tags: [frontend, ecommerce]
+
+projects:
+  - id: proj-sunday
+    name: Sunday
+    url: https://github.com/hcstephencheung/sunday
+    tags: [ai, typescript, python, side-project, personal-finance]
+    bullets:
+      - id: sunday-what
+        text: >-
+          Sundays are budgeting days, so I built Sunday, a web app that uses AI
+          to help my wife with her monthly budget, in TypeScript and Python
+        tags: [ai, product, fullstack, personal-finance]
+      - id: sunday-how
+        text: >-
+          Parses credit card statements with AI and auto-classifies
+          transactions into categories based on her previous choices
+        tags: [ai, automation]
+      - id: sunday-impact
+        text: >-
+          Cut her monthly budgeting time from an hour to 10 minutes
+        tags: [impact]
