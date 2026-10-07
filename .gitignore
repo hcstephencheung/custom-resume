@@ -15,8 +15,6 @@ output/
 
 # Personal resumes (<role>-<date>.resume.yaml) hold contact details; keep them local
 *.resume.yaml
-# The bank of work experience they draw from is personal too
-resume/work-experience.yaml
 
 # Secrets
 .env

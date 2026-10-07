@@ -29,8 +29,9 @@ resume preview --data <spec>.yaml    # render a master spec with a template
 When asked for a resume personalized to a job posting, build its `experience`
 from `resume/work-experience.yaml`: copy the roles and the bullets that fit the
 posting, with their ids and text unchanged. Write a new or reworded bullet into
-the bank first, under a new id, then select it. Both the bank and the
-`*.resume.yaml` files are gitignored; never commit them.
+the bank first, under a new id, then select it. The bank is committed; the
+`*.resume.yaml` files hold contact details, so they are gitignored and must
+never be committed.
 
 ## Templates
 
