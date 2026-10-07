@@ -85,7 +85,7 @@ sections:
         bullets:
           - Built an internal analytics dashboard in React used daily by the sales team.
 
-  - title: Projects
+  - title: Personal projects
     entries:
       - heading: tinybuild
         subheading: Open-source zero-config bundler

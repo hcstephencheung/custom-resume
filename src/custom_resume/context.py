@@ -96,7 +96,8 @@ def context_from_master(master: MasterResume) -> dict[str, Any]:
             }
             for p in master.projects
         ]
-        sections.append({"title": "Projects", "entries": entries})
+        title = "Personal project" if len(entries) == 1 else "Personal projects"
+        sections.append({"title": title, "entries": entries})
     if master.interests:
         sections.append({"title": "Interests", "text": master.interests})
     if master.disclaimer:
